@@ -148,3 +148,49 @@ Visual Studio Code
 
 
 If you reached till here, Congratulations! VSCode is setup and working correctly.
+
+
+Running Scala on Command Line
+-----------------------------
+
+Let's assume the source code directory is named ``BharatSim-master``. Navigate to the directory in terminal.
+
+* Build the project:
+
+  .. code-block:: console
+
+    $ sbt compile
+
+* Run the project
+
+  .. code-block:: console
+
+    $ sbt run
+
+  Multiple classes will be detected. We need dummy data to be able to run programs. So, let's first generate that.
+
+  * Enter the class number associated to ``com.bharatsim.model.DummyDataGenerator``. It may seem like the entered class number immediately disappears, but it is there. Just press ``ENTER``.
+  
+  * A ``dummy10k.csv`` file has been generated. Rename it to ``citizen10k.csv``.
+
+    .. code-block:: console
+
+      $ mv dummy10k.csv citizen10k.csv
+
+    .. image:: _static/images/cli-dummy-data-generator.png
+
+* Now, we **run the SIR Model**. SIR is a simple compartmental model to analyze epidemics, where a person can be either Susceptible (S), Infected (I) or Recovered (R). We will see SIR Model in detail in the Epidemiology section. 
+
+  * Do ``sbt run`` again and select the class number associated to ``com.bharatsim.examples.epidemiology.sir.Main``. It should start running the simulation.
+
+    .. error:: If it gives an error like ``Ingestion Failed : java.nio.file.NoSuchFileException: citizen10k.csv``, make sure you properly follow the previous steps to generate dummy data and rename ``dummydata10k.csv`` to ``citizen10k.csv``.
+
+    It should look like this:
+
+    .. image:: _static/images/cli-sir-run.png
+
+* The output CSV file is present at ``BharatSim-master/src/main/resources/output_unixtimestamp.csv``. This contains the output as per the specification in the program. This can be used to further analyze the results of the SIR Model run.
+
+This is how Scala programs can be run through the command line.
+
+.. tip:: Simply typing ``sbt`` will run the sbt console. The other commands can now be run in succession simply as ``compile``, ``run`` and more.
