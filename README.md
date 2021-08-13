@@ -2,6 +2,8 @@
 
 Tutorial Documentation for the BharatSim agent based modelling framework
 
+Link: https://bharatsim.readthedocs.io/
+
 ## Setting up the Documentation Environment
 
 - Clone the repository: `git clone git@github.com:JoyMonteiro/bharatsim-tutorial.git`
@@ -19,5 +21,7 @@ Read about [Sphinx](https://www.sphinx-doc.org/en/master/). Write documentation 
 - If you have `make` installed, simply do `make html`.
 - Else, `sphinx-build -b html source build/html`.
 
+This is only to check the final documentation. The build files are not supposed to be committed to version control. 
+The final documentation site is built automatically from source files.
 
 After that, submit a Pull Request to the main repository. They will be merged after a review.
