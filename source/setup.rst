@@ -194,3 +194,5 @@ Let's assume the source code directory is named ``BharatSim-master``. Navigate t
 This is how Scala programs can be run through the command line.
 
 .. tip:: Simply typing ``sbt`` will run the sbt console. The other commands can now be run in succession simply as ``compile``, ``run`` and more.
+
+  .. image:: _static/images/sbt-console.png
