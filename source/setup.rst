@@ -52,7 +52,7 @@ IntelliJ Idea
 
 .. note:: On Linux, a ``.tar.gz`` file is downloaded. 
 
-  * Unzip the archive: ``tar xvf archivename.tar.gz``. 
+  * Unzip the archive: ``tar -xvf archivename.tar.gz``. 
   * Go the unarchived folder. Run the ``bin/idea.sh`` file to open IntelliJ Idea.
 
 * Go to File --> Settings [Or press ``CTRL+ALT+S``] to open the Settings Menu. Go to **Plugins** and search and install the **Scala** Plugin.
