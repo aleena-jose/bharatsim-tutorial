@@ -61,13 +61,13 @@ IntelliJ Idea
 
   The IDE is now setup.
 
-  Let's open the Project. The following steps are assuming the source code directory is named ``BharatSim-master``.
+  Let's open the Project. The following steps are assuming the source code directory is named ``BharatSim``.
 
 * Go to File --> Open, and select the ``build.sbt`` file in the BharatSim source code directory. Now, select **Open as Project**. IntelliJ Idea will load the project.
 
 * We need some dummy data to run any examples.
   
-  * Inside Idea, on the left side there is the Project Directory Tree. Navigate to ``BharatSim-master/src/main/scala/com/bharatsim/model/`` and open the ``DummyDataGenerator.scala`` file.
+  * Inside Idea, on the left side there is the Project Directory Tree. Navigate to ``BharatSim/src/main/scala/com/bharatsim/model/`` and open the ``DummyDataGenerator.scala`` file.
   * The line where the ``object DummyDataGenerator`` starts, there should be a Green triangle, which looks like a Run/Play button. Click on that and **Run 'DummyDataGenerator'**. 
 
     .. image:: _static/images/dummy-data-generator.png
@@ -80,11 +80,11 @@ IntelliJ Idea
 
     .. image:: _static/images/dummy10k-file.png
 
-  * Open your system's file explorer. This dummy data file should be present as ``BharatSim-master/dummy10k.csv``. Rename it to ``citizen10k.csv``.
+  * Open your system's file explorer. This dummy data file should be present as ``BharatSim/dummy10k.csv``. Rename it to ``citizen10k.csv``.
 
 * Now, we **run the SIR Model**. SIR is a simple compartmental model to analyze epidemics, where a person can be either Susceptible (S), Infected (I) or Recovered (R). We will see SIR Model in detail in the Epidemiology section.
   
-  * In IntelliJ Idea, on the left is the project directory structure and tree. Navigate to ``BharatSim-master/src/main/scala/com/bharatsim/examples/epidemiology/sir`` and open the ``Main.scala`` file. 
+  * In IntelliJ Idea, on the left is the project directory structure and tree. Navigate to ``BharatSim/src/main/scala/com/bharatsim/examples/epidemiology/sir`` and open the ``Main.scala`` file. 
   
   * There will again be a Green arrow/triangle besides the line containing ``object Main``. Click on it, and ``Run 'Main'``.
   
@@ -94,7 +94,7 @@ IntelliJ Idea
 
     .. image:: _static/images/sir-run.png
 
-  * The output CSV file is present at ``BharatSim-master/src/main/resources/output_unixtimestamp.csv``. This contains the output as per the specification in the program. This can be used to further analyze the results of the SIR Model run.
+  * The output CSV file is present at ``BharatSim/src/main/resources/output_unixtimestamp.csv``. This contains the output as per the specification in the program. This can be used to further analyze the results of the SIR Model run.
 
 
 If you reached till here, Congratulations! IntelliJ Idea is setup and working correctly.
@@ -113,15 +113,15 @@ Visual Studio Code
   
   .. image:: _static/images/vscode-extensions.png
 
-  Let's open the Project. The following steps are assuming the source code directory is named ``BharatSim-master``.
+  Let's open the Project. The following steps are assuming the source code directory is named ``BharatSim``.
 
-* Go to File --> Open Folder, and select the ``BharatSim-master`` folder. When prompted by VSCode, click on **Import Build**. 
+* Go to File --> Open Folder, and select the ``BharatSim`` folder. When prompted by VSCode, click on **Import Build**. 
   
   * If you miss it somehow, go to View --> Command Palette [or press ``CTRL+SHIFT+P``] and search for "Import build". Click on "Metals: Import build" and sit back for a while as VSCode goes through the project structure and builds the project.
 
 * We need some dummy data to run any examples.
   
-  * Inside VSCode, on the left side there is the Project Directory Tree. Navigate to ``BharatSim-master/src/main/scala/com/bharatsim/model/`` and open the ``DummyDataGenerator.scala`` file.
+  * Inside VSCode, on the left side there is the Project Directory Tree. Navigate to ``BharatSim/src/main/scala/com/bharatsim/model/`` and open the ``DummyDataGenerator.scala`` file.
   
   * The line where the ``object DummyDataGenerator`` starts, there should be two little buttons saying ``run | debug``. If they do not appear, wait for a while, VSCode might still be building the project. Once it appears, click on ``run``.
 
@@ -135,7 +135,7 @@ Visual Studio Code
 
 * Now, we **run the SIR Model**. SIR is a simple compartmental model to analyze epidemics, where a person can be either Susceptible (S), Infected (I) or Recovered (R). We will see SIR Model in detail in the Epidemiology section.
   
-  * In VSCode, on the left is the project directory structure and tree. Navigate to ``BharatSim-master/src/main/scala/com/bharatsim/examples/epidemiology/sir`` and open the ``Main.scala`` file. 
+  * In VSCode, on the left is the project directory structure and tree. Navigate to ``BharatSim/src/main/scala/com/bharatsim/examples/epidemiology/sir`` and open the ``Main.scala`` file. 
   * There will again be a ``run | debug`` above the line containing ``object Main``. Click on ``run``.
   
     .. error:: If it gives an error like ``Ingestion Failed : java.nio.file.NoSuchFileException: citizen10k.csv``, make sure you properly follow the previous steps to generate dummy data and rename ``dummydata10k.csv`` to ``citizen10k.csv``.
@@ -144,7 +144,7 @@ Visual Studio Code
 
     .. image:: _static/images/vscode-sir-run.png
 
-  * The output CSV file is present at ``BharatSim-master/src/main/resources/output_unixtimestamp.csv``. This contains the output as per the specification in the program. This can be used to further analyze the results of the SIR Model run.
+  * The output CSV file is present at ``BharatSim/src/main/resources/output_unixtimestamp.csv``. This contains the output as per the specification in the program. This can be used to further analyze the results of the SIR Model run.
 
 
 If you reached till here, Congratulations! VSCode is setup and working correctly.
@@ -153,7 +153,7 @@ If you reached till here, Congratulations! VSCode is setup and working correctly
 Running Scala on Command Line
 -----------------------------
 
-Let's assume the source code directory is named ``BharatSim-master``. Navigate to the directory in terminal.
+Let's assume the source code directory is named ``BharatSim``. Navigate to the directory in terminal.
 
 * Build the project:
 
@@ -189,7 +189,7 @@ Let's assume the source code directory is named ``BharatSim-master``. Navigate t
 
     .. image:: _static/images/cli-sir-run.png
 
-* The output CSV file is present at ``BharatSim-master/src/main/resources/output_unixtimestamp.csv``. This contains the output as per the specification in the program. This can be used to further analyze the results of the SIR Model run.
+* The output CSV file is present at ``BharatSim/src/main/resources/output_unixtimestamp.csv``. This contains the output as per the specification in the program. This can be used to further analyze the results of the SIR Model run.
 
 This is how Scala programs can be run through the command line.
 
