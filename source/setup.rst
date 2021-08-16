@@ -65,30 +65,13 @@ IntelliJ Idea
 
 * Go to File --> Open, and select the ``build.sbt`` file in the BharatSim source code directory. Now, select **Open as Project**. IntelliJ Idea will load the project.
 
-* We need some dummy data to run any examples.
-  
-  * Inside Idea, on the left side there is the Project Directory Tree. Navigate to ``BharatSim/src/main/scala/com/bharatsim/model/`` and open the ``DummyDataGenerator.scala`` file.
-  * The line where the ``object DummyDataGenerator`` starts, there should be a Green triangle, which looks like a Run/Play button. Click on that and **Run 'DummyDataGenerator'**. 
-
-    .. image:: _static/images/dummy-data-generator.png
-
-  * A window will pop up from below, showing the status of the run. Once it is completed, it should look like:
-
-    .. image:: _static/images/dummy-data-generator-run-finished.png
-
-  * In the Project Directory structure on the left, scroll down a bit. There will be a ``dummy10k.csv`` file now present. 
-
-    .. image:: _static/images/dummy10k-file.png
-
-  * Open your system's file explorer. This dummy data file should be present as ``BharatSim/dummy10k.csv``. Rename it to ``citizen10k.csv``.
-
 * Now, we **run the SIR Model**. SIR is a simple compartmental model to analyze epidemics, where a person can be either Susceptible (S), Infected (I) or Recovered (R). We will see SIR Model in detail in the Epidemiology section.
   
   * In IntelliJ Idea, on the left is the project directory structure and tree. Navigate to ``BharatSim/src/main/scala/com/bharatsim/examples/epidemiology/sir`` and open the ``Main.scala`` file. 
   
   * There will again be a Green arrow/triangle besides the line containing ``object Main``. Click on it, and ``Run 'Main'``.
   
-    .. error:: If it gives an error like ``Ingestion Failed : java.nio.file.NoSuchFileException: citizen10k.csv``, make sure you properly follow the previous steps to generate dummy data and rename ``dummydata10k.csv`` to ``citizen10k.csv``.
+    .. error:: If it gives an error like ``Ingestion Failed : java.nio.file.NoSuchFileException: citizen10k.csv``, make sure there is a file named ``citizen10k.csv`` inside the BharatSim folder. If it is not present, it might have been mistakenly deleted or misplaced. Get the source code again in that case.
 
   * Wait till the program finishes running. At the end, it should look like this:
 
@@ -117,28 +100,14 @@ Visual Studio Code
 
 * Go to File --> Open Folder, and select the ``BharatSim`` folder. When prompted by VSCode, click on **Import Build**. 
   
-  * If you miss it somehow, go to View --> Command Palette [or press ``CTRL+SHIFT+P``] and search for "Import build". Click on "Metals: Import build" and sit back for a while as VSCode goes through the project structure and builds the project.
-
-* We need some dummy data to run any examples.
-  
-  * Inside VSCode, on the left side there is the Project Directory Tree. Navigate to ``BharatSim/src/main/scala/com/bharatsim/model/`` and open the ``DummyDataGenerator.scala`` file.
-  
-  * The line where the ``object DummyDataGenerator`` starts, there should be two little buttons saying ``run | debug``. If they do not appear, wait for a while, VSCode might still be building the project. Once it appears, click on ``run``.
-
-    .. image:: _static/images/vscode-dummy-data-generator.png
-
-  * The integrated terminal window will pop up from below, showing the Debug Console as in the above image once the program finishes running.
-
-  * In the Project Directory structure on the left, scroll down a bit. There will be a ``dummy10k.csv`` file now present. Right click, and rename this file to ``citizen10k.csv``.
-
-    .. image:: _static/images/vscode-dummy10k.png
+  * If you miss it somehow, go to View --> Command Palette [or press ``CTRL+SHIFT+P``] and search for "Import build". Click on "Metals: Import build" and sit back for a while as VSCode goes through the project structure and builds the project. If you are unable to find such an option, make sure you installed the Metals extension. Restart VSCode if needed.
 
 * Now, we **run the SIR Model**. SIR is a simple compartmental model to analyze epidemics, where a person can be either Susceptible (S), Infected (I) or Recovered (R). We will see SIR Model in detail in the Epidemiology section.
   
   * In VSCode, on the left is the project directory structure and tree. Navigate to ``BharatSim/src/main/scala/com/bharatsim/examples/epidemiology/sir`` and open the ``Main.scala`` file. 
   * There will again be a ``run | debug`` above the line containing ``object Main``. Click on ``run``.
   
-    .. error:: If it gives an error like ``Ingestion Failed : java.nio.file.NoSuchFileException: citizen10k.csv``, make sure you properly follow the previous steps to generate dummy data and rename ``dummydata10k.csv`` to ``citizen10k.csv``.
+    .. error:: If it gives an error like ``Ingestion Failed : java.nio.file.NoSuchFileException: citizen10k.csv``, make sure there is a file named ``citizen10k.csv`` inside the BharatSim folder. If it is not present, it might have been mistakenly deleted or misplaced. Get the source code again in that case.
 
   * Wait till the program finishes running. At the end, it should look like this:
 
@@ -160,30 +129,12 @@ Let's assume the source code directory is named ``BharatSim``. Navigate to the d
   .. code-block:: console
 
     $ sbt compile
-
-* Run the project
-
-  .. code-block:: console
-
-    $ sbt run
-
-  Multiple classes will be detected. We need dummy data to be able to run programs. So, let's first generate that.
-
-  * Enter the class number associated to ``com.bharatsim.model.DummyDataGenerator``. It may seem like the entered class number immediately disappears, but it is there. Just press ``ENTER``.
   
-  * A ``dummy10k.csv`` file has been generated. Rename it to ``citizen10k.csv``.
-
-    .. code-block:: console
-
-      $ mv dummy10k.csv citizen10k.csv
-
-    .. image:: _static/images/cli-dummy-data-generator.png
-
 * Now, we **run the SIR Model**. SIR is a simple compartmental model to analyze epidemics, where a person can be either Susceptible (S), Infected (I) or Recovered (R). We will see SIR Model in detail in the Epidemiology section. 
 
-  * Do ``sbt run`` again and select the class number associated to ``com.bharatsim.examples.epidemiology.sir.Main``. It should start running the simulation.
+  * Do ``sbt run`` and select the class number associated to ``com.bharatsim.examples.epidemiology.sir.Main``. It should start running the simulation. It may appear as if the class number is not being typed, but it is! Just input the number and press ENTER.
 
-    .. error:: If it gives an error like ``Ingestion Failed : java.nio.file.NoSuchFileException: citizen10k.csv``, make sure you properly follow the previous steps to generate dummy data and rename ``dummydata10k.csv`` to ``citizen10k.csv``.
+    .. error:: If it gives an error like ``Ingestion Failed : java.nio.file.NoSuchFileException: citizen10k.csv``, make sure there is a file named ``citizen10k.csv`` inside the BharatSim folder. If it is not present, it might have been mistakenly deleted or misplaced. Get the source code again in that case.
 
     It should look like this:
 
