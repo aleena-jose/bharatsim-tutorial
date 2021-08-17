@@ -11,16 +11,23 @@ Steps for creating and executing a new jdk jar file
 
 1.  Go to the sbt shell in IntelliJ, and type ``assembly``
 
-.. figure:: Jardoc1.jpg
+.. figure:: _static/images/jar-doc-1.png
     :width: 200px
     :align: center
     :height: 100px
     :alt: alternate text
     :figclass: align-center
 
-    sbt shell
+        sbt shell
 
 2. The shell will display all the ``Main.scala`` files which are present in your directory. Select the one you want to run by typing it's index in the shell.
+3. The shell will display all the ``Main.scala`` files which are present in your directory. Select the one you want to run by typing it's index in the shell.
+4. Alternatively, you can specify which ``Main.scala`` file you want to run in the ``build.sbt`` file by typing the following command :-
 
+.. figure:: _static/images/jar-doc-4.png
+    :width: 200px
+    :align: center
+    :height: 100px
+    :alt: alternate text
+    :figclass: align-center
 
-.. code::
