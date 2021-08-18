@@ -18,14 +18,20 @@ Bharat-Sim's documentation!
 
 
 
-SIR Model with Agents
-=====================
+Step-by-step Construction of the SIR Model
+===========================================
 
-The Bharat-sim framework allows you to build agent-based models. Agents, are essentially the main component of the simulation. They are entities which are defined with a bunch of parameters and certain rules which they have to obey as the simulation runs.
+Bharatsim is an open source large-scale agent-based simulation framework which allows you to build and simulate sophisticated agent-based models. Agents form the main component of such a simulation. They are entities which are defined with a set of parameters and obey certain specified conditions as the simulation runs.
 
-In the purview of the SIR Model, the agents are people, which go about their daily lives and follow regular schedules. Here, the parameters defining an agent are a unique agent id, age, their infection status, the time for which they remain infected and so on. The simulation allows you to introduce new parameters as and when required.
+In the purview of the SIR Model, the agents are people, which go about their daily lives and follow regular schedules. Here, the parameters defining an agent are a unique agent id, their age, their infection status, the time for which they remain infected and so on. The framework allows you to introduce new parameters as and when required.
 
-The rules governing the behaviour of all agents include the particular schedules which they follow and, the functions which allow the agents to transit from one compartment to the other.
+The rules governing the behaviour of all agents include the particular schedules which they follow and the functions which allow the agents to transit from one compartment to another as described before. 
+
+
+
+
+
+
 
 Schedules
 ---------
