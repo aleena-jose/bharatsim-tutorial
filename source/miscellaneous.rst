@@ -71,7 +71,7 @@ One could use the ``outputName`` and use it in the name of the csv file, for eg.
 .. code::
 
     SimulationListenerRegistry.register(
-        new CsvOutputGenerator("C:\\Users\\prath\\Documents\\IISER_vs_Vasti\\control_"+outputName+".csv", new SEIROutputSpec(context))
+        new CsvOutputGenerator("C:\\Users\\username\\Documents\\"+outputName+".csv", new SEIROutputSpec(context))
       )
 
 To implement this, one must go to the ``sbt shell`` and type ``run "my_sir_model"``. If this were to be used on the code-block above, the output csv file will be named as ``my_sir_model.csv``. However, if one runs the file without specifiying the arguement, it will show an error:
@@ -82,6 +82,8 @@ To implement this, one must go to the ``sbt shell`` and type ``run "my_sir_model
     :height: 100px
     :alt: alternate text
     :figclass: align-center
+    
+    
 
 One can also run a Main file by creating a `.jar` file, as described above and then running ``java -jar file.jar [ arguments ]``
 
