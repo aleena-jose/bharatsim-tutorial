@@ -83,6 +83,6 @@ To implement this, one must go to the ``sbt shell`` and type ``run "my_sir_model
     :alt: alternate text
     :figclass: align-center
 
-One can also implement this by creating a `.jar` file, as described above and then running ``java -jar file.jar [ arguments ]``
+One can also run a Main file by creating a `.jar` file, as described above and then running ``java -jar file.jar [ arguments ]``
 
 
