@@ -38,9 +38,9 @@ Steps for creating and executing a new jdk jar file
         b. item BatchNeo4jProviderTest
         c. item ReadOperationsStreamTest
         d. item WriteOperationsStreamTest
-Go to ``Bharat-sim Master\\src\\test\\scala\\com.bharatsim.engine\\graph\\neo4j`` and comment out (``ctrl + \``) all the lines in the test files for tests (a) and (b). Open the ``queryBatching`` folder in the same directory and comment out all lines for tests (c) and (d). 
+Go to ``C:\Users\prath\Documents\BharatSim\src\test\scala\com\bharatsim\engine\graph\neo4j`` and comment out (``ctrl + \``) all the lines in the test files for tests (a) and (b). Open the ``queryBatching`` folder in the same directory and comment out all lines for tests (c) and (d). 
 
-7. Open ``BharatSim-master\target\scala-2.13`` where you will find the new JDK JAR file created. It should have the name``engine-assembly-0.1``. You can now keep the file here or move it to a folder/directory of your choice.
+7. Open ``BharatSim\target\scala-2.13`` where you will find the new JDK JAR file created. It should have the name``engine-assembly-0.1``. You can now keep the file here or move it to a folder/directory of your choice.
 
 8. Open a shell(powershell/gitbash/linux shell , etc.) in the directory/folder in which you have saved your JDK JAR file and type ``java -jar jarfilename``.
 
@@ -58,14 +58,46 @@ Go to ``Bharat-sim Master\\src\\test\\scala\\com.bharatsim.engine\\graph\\neo4j`
 Using args in main method
 ==========================
 While using the ``run`` command on the sbt shell, one can pass in some ``string`` arguments. These arguements can be called by the main function. 
-for example:
+For example, one might want to change the name of the output file everytime they run the code. Instead of changing the output name manually each time, one can write a code like the one given below.
+
 .. code::
 
     var outputName = "dummyName"
 
-    def main(args: Array[String]): Unit = {
+      def main(args: Array[String]): Unit = {
         outputName = args(0)
-         
-The above block of code is allocating a variable called \verb|outputName|, and then using the 1st string passed through the  ``run`` command. For example, ``run "example"``. In this case, ``outputName`` becomes ``"example"``. The variable can be used by the user where ever they need it. 
+        var beforeCount = 0
+        val simulation = Simulation()
 
+        simulation.ingestData(implicit context => {
+          ingestCSVData("C:\\Users\\prath\\Documents\\BharatSim\\src\\main\\resources\\citizen.csv", csvDataExtractor)
+          logger.debug("Ingestion done")
+        })
+
+        simulation.defineSimulation(implicit context => {
+          addLockdown
+          create12HourSchedules()
+
+          registerAction(
+            StopSimulation,
+            (c: Context) => {
+              getInfectedCount(c) == 0
+            }
+          )
+
+          beforeCount = getInfectedCount(context)
+
+          registerAgent[Person]
+
+          val currentTime = new Date().getTime
+
+          SimulationListenerRegistry.register(
+            new CsvOutputGenerator("C:\\Users\\prath\\Documents\\output\\control"+outputName+".csv", new SEIROutputSpec(context))
+          )
+        })
+
+
+The above block of code is allocating a variable called ``outputName``, and then using the 1st string passed through the  ``run`` command, as the ``outputName``. 
+
+To implement this, one must go to the ``sbt shell`` and type ``run "arguement"``. If this were to be used on the code-block above, the output csv file will be named as ``contolarguement.csv``.
 
