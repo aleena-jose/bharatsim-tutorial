@@ -11,3 +11,5 @@ In this tutorial documentation, we look at examples in Epidemiology.
    :caption: Contents:
 
    setup
+   miscellaneous
+   epidemiology-sir-model-as-differential-equations
