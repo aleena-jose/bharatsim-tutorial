@@ -38,7 +38,7 @@ Steps for creating and executing a new jdk jar file
         b. item BatchNeo4jProviderTest
         c. item ReadOperationsStreamTest
         d. item WriteOperationsStreamTest
-Go to ``C:\Users\prath\Documents\BharatSim\src\test\scala\com\bharatsim\engine\graph\neo4j`` and comment out (``ctrl + \``) all the lines in the test files for tests (a) and (b). Open the ``queryBatching`` folder in the same directory and comment out all lines for tests (c) and (d). 
+Go to ``BharatSim\src\test\scala\com\bharatsim\engine\graph\neo4j`` and comment out (``ctrl + /``) all the lines in the test files for tests (a) and (b). Open the ``queryBatching`` folder in the same directory and comment out all lines for tests (c) and (d). 
 
 7. Open ``BharatSim\target\scala-2.13`` where you will find the new JDK JAR file created. It should have the name``engine-assembly-0.1``. You can now keep the file here or move it to a folder/directory of your choice.
 
@@ -62,42 +62,27 @@ For example, one might want to change the name of the output file everytime they
 
 .. code::
 
-    var outputName = "dummyName"
-
       def main(args: Array[String]): Unit = {
         outputName = args(0)
-        var beforeCount = 0
-        val simulation = Simulation()
+        }
+        
+One could use the ``outputName`` and use it in the name of the csv file, for eg. 
 
-        simulation.ingestData(implicit context => {
-          ingestCSVData("C:\\Users\\prath\\Documents\\BharatSim\\src\\main\\resources\\citizen.csv", csvDataExtractor)
-          logger.debug("Ingestion done")
-        })
+.. code::
 
-        simulation.defineSimulation(implicit context => {
-          addLockdown
-          create12HourSchedules()
+    SimulationListenerRegistry.register(
+        new CsvOutputGenerator("C:\\Users\\prath\\Documents\\IISER_vs_Vasti\\control_"+outputName+".csv", new SEIROutputSpec(context))
+      )
 
-          registerAction(
-            StopSimulation,
-            (c: Context) => {
-              getInfectedCount(c) == 0
-            }
-          )
+To implement this, one must go to the ``sbt shell`` and type ``run "my_sir_model"``. If this were to be used on the code-block above, the output csv file will be named as ``my_sir_model.csv``. However, if one runs the file without specifiying the arguement, it will show an error:
 
-          beforeCount = getInfectedCount(context)
+.. figure:: _static/images/jar-doc-5.png
+    :width: 200px
+    :align: center
+    :height: 100px
+    :alt: alternate text
+    :figclass: align-center
 
-          registerAgent[Person]
+One can also implement this by creating a `.jar` file, as described above and then running ``java -jar file.jar [ arguments ]``
 
-          val currentTime = new Date().getTime
-
-          SimulationListenerRegistry.register(
-            new CsvOutputGenerator("C:\\Users\\prath\\Documents\\output\\control"+outputName+".csv", new SEIROutputSpec(context))
-          )
-        })
-
-
-The above block of code is allocating a variable called ``outputName``, and then using the 1st string passed through the  ``run`` command, as the ``outputName``. 
-
-To implement this, one must go to the ``sbt shell`` and type ``run "arguement"``. If this were to be used on the code-block above, the output csv file will be named as ``contolarguement.csv``.
 
