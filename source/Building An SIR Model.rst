@@ -30,5 +30,47 @@ The model consists of different objects and classes and can be separated into in
 4. Output Specification: ``CSVSpecs`` is a framework defined trait which helps in generating a .csv file for the simulation output. The ``SEIROutputSpec`` is a class that extends this trait and defines how the output ``.csv`` file should look. Inside this class, the ``getHeaders`` basically specifies the list of column headers in the ``.csv`` file, while the ``getRows`` fetches the values of these quantities from context. For eg. one can use the ``fetchcount`` function in the framework defined trait ``graphProvider`` to display the number of people in each compartment at every tick.
 
 
+Saving your Output
+~~~~~~~~~~~~~~~~~~
 
+Suppose you wanted your output to give you the numbers of susceptible, infected and recovered people at every time step. You can then write the following:
 
+.. code-block:: scala
+
+  import com.bharatsim.engine.Context
+  import com.bharatsim.engine.graph.patternMatcher.MatchCondition._
+  import com.bharatsim.engine.listeners.CSVSpecs
+  import com.bharatsim.examples.epidemiology.SIR.InfectionStatus.{Infected, Removed, Susceptible}
+  
+  class SIROutputSpec(context: Context) extends CSVSpecs {
+    override def getHeaders: List[String] =
+      List(
+        "Step",
+        "Susceptible",
+        "Infected",
+        "Removed"
+      )
+  
+    override def getRows(): List[List[Any]] = {
+      val graphProvider = context.graphProvider
+      val label = "Person"
+      val row = List(
+        context.getCurrentStep,
+        graphProvider.fetchCount(label, "infectionState" equ Susceptible),
+        graphProvider.fetchCount(label, "infectionState" equ Infected),
+        graphProvider.fetchCount(label, "infectionState" equ Removed)
+      )
+      List(row)
+    }
+  }
+ 
+* The first column (Step) stores the current time step, obtained using the ``context.getCurrentStep`` function
+* The next 3 columns store the number of Susceptible, Infected and Removed people respectively, by fetching the total number of ``Person`` nodes on the graph with the appropriate `infection status <#>`_.
+
+Now we simply have to register it in the simulation. Note that the following code snippet should be located inside ``simulation.defineSimulation`` in the main function:
+
+.. code-block:: scala
+
+  SimulationListenerRegistry.register(
+    new CsvOutputGenerator("src/main/resources/output.csv", new SIROutputSpec(context))
+      )
