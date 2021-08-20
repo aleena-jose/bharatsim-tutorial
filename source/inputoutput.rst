@@ -16,13 +16,25 @@ A convenient way to store the output is by using a `CSV <https://en.wikipedia.or
 .. note:: In case the quantities you'd like to output are fairly simple, you could use Scala's ``println`` function to directly output what you need.
 
 Saving your output to a CSV file
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The BharatSim engine contains a class called ``CsvOutputGenerator``, which has two attributes:
+We'd often like to get an output from the simulation at every time step, as it allows us to analyze the time-evolution of the system. BharatSim handles that by using **listeners**.
+
+``SimulationListener`` is a trait with 4 methods, each of which allow us to perform a task in one of the following situations:
+
+* At the start of the simulation
+* At the start of every time step
+* At the end of every time step
+* At the end of the simulation
+
+The BharatSim engine also contains a class called ``CsvOutputGenerator``, an extension of ``SimulationListener`` which has two attributes:
+
 * ``path``, the desired path for the output file to be stored
 * ``csvSpecs``, a user-defined class that outputs the headers and the rows required. Note that this user-defined class should extend the ``CSVSpecs`` trait and override the ``getHeaders`` and ``getRows`` methods.
 
-Once the class is complete, we now have to **register** it in the simulation (defined in the main function), similar to how we registered `agents <#>`_. First, we must import ``CsvOutputGenerator`` and ``SimulationListenerRegistry``
+This class writes the headers at the start of the simulation, and writes the rows at the start of every time step.
+
+Once the user-defined class is complete, it must be **registered** in the simulation (defined in the main function) (similar to how we registered `agents <#>`_), so that it writes data to the CSV file at every time step. First, we must import ``CsvOutputGenerator`` and ``SimulationListenerRegistry``
 
 .. code-block:: scala
    
