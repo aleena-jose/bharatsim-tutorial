@@ -15,7 +15,7 @@ A convenient way to store the output is by using a `CSV <https://en.wikipedia.or
 
 .. note:: In case the quantities you'd like to output are fairly simple, you could use Scala's ``println`` function to directly output what you need.
 
-Outputting to a CSV file
+Saving your output to a CSV file
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 The BharatSim engine contains a class called ``CsvOutputGenerator``, which has two attributes:
@@ -101,10 +101,8 @@ Now we simply have to register it in the simulation. Note that the following cod
 
       registerAgent[Person]
 
-      val currentTime = new Date().getTime
-
       SimulationListenerRegistry.register(
-        new CsvOutputGenerator("src/main/resources/output_" + currentTime + ".csv", new SIROutputSpec(context))
+        new CsvOutputGenerator("src/main/resources/output.csv", new SIROutputSpec(context))
       )
     })
 
@@ -113,4 +111,13 @@ Now we simply have to register it in the simulation. Note that the following cod
       teardown()
     }
 
-We add the current time to the name of the output so that repeated runs of the code do not rewrite the same output file.
+.. hint:: Running the above block of code once will cause a file called ``output`` to be created at ``src/main/resources/``. However, running it again will rewrite the contents of the file with the new output. You can get around this by adding the current time to the output as a string. For example,
+
+  .. code-block:: scala
+
+    val currentTime = new Date().getTime
+
+    SimulationListenerRegistry.register(
+        new CsvOutputGenerator("src/main/resources/output_" + currentTime + ".csv", new SIROutputSpec(context))
+      )
+  Note that ``Date().getTime`` returns the time as a `UNIX timestamp <https://en.wikipedia.org/wiki/Unix_time>`_, and so your output will contain a long integer after the underscore.
