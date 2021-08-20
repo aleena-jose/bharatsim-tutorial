@@ -62,7 +62,13 @@ We can define a class as follows:
     }
   }
 
-Now, we need to create an instance of the ``CsvOutputGenerator`` class that uses ``MyOutputSpec``, and call the required methods. We do that by adding the following code snippet inside ``simulation.defineSimulation`` in the main function:
+Now, we need to create an instance of the ``CsvOutputGenerator`` class that uses ``MyOutputSpec``, and call the required methods. First, we need to import ``CsvOutputGenerator`` into our main class:
+
+.. code-block:: scala
+
+  import com.bharatsim.engine.listeners.CsvOutputGenerator
+
+Next, we add the following code snippet inside ``simulation.defineSimulation`` in the main function:
 
 .. code-block:: scala
 
@@ -73,7 +79,12 @@ Now, we need to create an instance of the ``CsvOutputGenerator`` class that uses
 
 .. note:: Calling the ``onStepEnd`` method of the class isn't necessary, as the ``CsvOutputGenerator`` class currently does nothing when it's called.
 
-Remember to import ``com.bharatsim.engine.listeners.CsvOutputGenerator``!
+The output is
+
+.. code-block:: csv
+
+  Header1,Header2,Header3
+  row0,row0,row0
 
 .. hint:: In case you want your outputs generated *after* the simulation is completed, you can place the above 4 lines of code inside ``simulation.onCompleteSimulation``.
 
@@ -99,6 +110,18 @@ Next, we register it using the ``register`` method of ``SimulationListenerRegist
 
 where ``myCsvSpecs`` is the user-defined class which requires the context as an attribute.
 
+Now, the output is
+
+.. code-block:: csv
+
+  Header1,Header2,Header3
+  row1,row1,row1
+  row2,row2,row2
+  row3,row3,row3
+  row4,row4,row4
+  row5,row5,row5
+
+and so on, until the tick at which the simulation ends.
 
 .. hint:: Running the above block of code once will cause a file called ``output`` to be created at ``src/main/resources/``. However, running it again will rewrite the contents of the file with the new output. You can get around this by adding the current time to the output as a string. For example,
 

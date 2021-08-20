@@ -67,38 +67,10 @@ Suppose you wanted your output to give you the numbers of susceptible, infected 
 * The first column (Step) stores the current time step, obtained using the ``context.getCurrentStep`` function
 * The next 3 columns store the number of Susceptible, Infected and Removed people respectively, by fetching the total number of ``Person`` nodes on the graph with the appropriate `infection status <#>`_.
 
-Now we simply have to register it in the simulation. Note that the following code snippet should be located in the main function:
+Now we simply have to register it in the simulation. Note that the following code snippet should be located inside ``simulation.defineSimulation`` in the main function:
 
 .. code-block:: scala
 
-    val simulation = Simulation()
-
-    simulation.ingestData(implicit context => {
-      ingestCSVData("inputData.csv", csvDataExtractor)
-    })
-
-    simulation.defineSimulation(implicit context => {
-
-      create12HourSchedules()
-
-      registerAction(
-        StopSimulation,
-        (c: Context) => {
-          getInfectedCount(c) == 0
-        }
+  SimulationListenerRegistry.register(
+    new CsvOutputGenerator("src/main/resources/output.csv", new SIROutputSpec(context))
       )
-
-      beforeCount = getInfectedCount(context)
-
-      registerAgent[Person]
-
-      SimulationListenerRegistry.register(
-        new CsvOutputGenerator("src/main/resources/output.csv", new SIROutputSpec(context))
-      )
-    })
-
-    simulation.onCompleteSimulation { implicit context =>
-      printStats(beforeCount)
-      teardown()
-    }
-
