@@ -86,7 +86,7 @@ The output is
   Header1,Header2,Header3
   row0,row0,row0
 
-.. hint:: In case you want your outputs generated *after* the simulation is completed, you can place the above 4 lines of code inside ``simulation.onCompleteSimulation``.
+.. tip:: In case you want your outputs generated *after* the simulation is completed, you can place the above 4 lines of code inside ``simulation.onCompleteSimulation``.
 
 Output at every time step
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -121,9 +121,9 @@ Now, the output is
   row4,row4,row4
   row5,row5,row5
 
-and so on, until the tick at which the simulation ends.
+and so on, until the time step at which the simulation ends.
 
-.. hint:: Running the above block of code once will cause a file called ``output`` to be created at ``src/main/resources/``. However, running it again will rewrite the contents of the file with the new output. You can get around this by adding the current time to the output as a string. For example,
+.. tip:: Running the above block of code once will cause a file called ``output`` to be created at ``src/main/resources/``. However, running it again will rewrite the contents of the file with the new output. You can get around this by adding the current time to the output as a string. For example,
 
   .. code-block:: scala
 
