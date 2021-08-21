@@ -36,18 +36,18 @@ We then ingest the data in the following way:
 .. code-block:: scala
 
   simulation.ingestData(implicit context => {
-    ingestCSVData("citizen10k.csv", csvDataExtractor)
+    ingestCSVData("input.csv", myCsvDataExtractor)
     logger.debug("Ingestion done")
   })
 
-where ``csvDataExtractor`` is the user-defined function.
+where ``myCsvDataExtractor`` is the user-defined function.
 
 .. note:: The above block of code essentially causes the data from the CSV file to be read one line at a time
 
 Using the User-Defined function
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The user-defined function (``csvDataExtractor``, in our case) will depend on the data we want to extract. As an example, let's consider that we have data on a number of cats, each with their own ID, name, city of residence, an integer ID for the city, and a particular colour. Our CSV file would look like
+The user-defined function (``myCsvDataExtractor``, in our case) will depend on the data we want to extract. As an example, let's consider that we have data on a number of cats, each with their own ID, name, city of residence, an integer ID for the city, and a particular colour. Our CSV file would look like
 
 .. code-block:: csv
 
@@ -57,17 +57,84 @@ The user-defined function (``csvDataExtractor``, in our case) will depend on the
   2,Garfield,LasagnaLand,7,Orange
   3,Elizabeth,Mishelam,102,Black
   4,Coppe,Crossbell,100,Black
-  5,Antoine,Zeiss,62,Brown
+  5,Marie,Crossbell,100,Orange
+  6,Antoine,Zeiss,62,Brown
 
 Let's assume we've already defined the following:
 
 * a case class ``Cat`` with three attributes, ``id``, ``name`` and ``colour``
 * another case class ``City`` with two attributes, ``id`` and ``cityname``
-We could then write out ``csvDataExtractor`` function in the following way:
+
+Our function ``myCsvDataExtractor`` should do the following
+
+* accept a map of keys (the CSV headers) and values (the CSV element in the row corresponding to the header)
+* accept the context as an implicit parameter
+* return a ``GraphData`` object (which you can read about `here <#>`_)
+
+.. note:: The map is already provided by the ``ingestCsvData`` function
 
 .. code-block:: scala
 
-  private def csvDataExtractor(map: Map[String, String](implicit context: Context): GraphData = {
+  private def myCsvDataExtractor(map: Map[String, String](implicit context: Context): GraphData = {}
+
+The first thing we need to do in the function is store the CSV data to appropriate variables.
+
+.. code-block:: scala
+
+    val catName = map("Name").toString
+    val catID = map("ID").toLong
+    val catCity = map("City").toString
+    val catCityID = map("CityID").toLong
+    val catColour = map("Colour").toString
+
+.. note:: The key of the ``map`` is the header from the CSV file.
+
+We then use a `Constructor <https://alvinalexander.com/scala/scala-class-examples-constructors-case-classes-parameters/>`_ to create an instance of the ``Cat`` class, for the cat pertaining to a particular row in the CSV. We then do the same for the ``City`` class.
+
+.. code-block:: scala
+
+    val singleCat: Cat = Cat(
+      catID,
+      catName,
+      catColour
+    )
+
+    val singleCity: City = City(
+      catCityId,
+      catCity
+    )
+
+Next, we establish *relations* that will link nodes on the graph. We make a ``livesIn`` relation between the cat and the city, and a ``contains`` relation between the city and the cat. To do this, we specify the classes the relation is formed between, and then the unique IDs of the nodes with the relation in between them.
+
+.. code-block:: scala
+
+    val livesIn = Relation[Cat, City](catID, "LIVES_IN", catCityID)
+    val contains = Relation[City, Cat](catCityID, "CONTAINS", catID)
+
+We then create an instance of the ``GraphData`` class, and add the nodes and relations to it
+
+.. code-block:: scala
+
+    val graphData = GraphData()
+    graphData.addNode(catID, singleCat)
+    graphData.addNode(catCityID, singleCity)
+    graphData.addRelations(staysAt, contains)
+
+.. note:: The first parameter of ``graphData.addNode`` is the unique key of the node.
+
+Finally, we need our function to return the ``graphData`` object we've made:
+
+.. code-block:: scala
+
+    graphData
+
+.. hint:: In scala, the last line of a function is treated as a return, and so this is valid syntax.
+
+Putting it all together, our user-defined ``myCsvDataExtractor`` function is
+
+.. code-block:: scala
+
+  private def myCsvDataExtractor(map: Map[String, String](implicit context: Context): GraphData = {
 
     val catName = map("Name").toString
     val catID = map("ID").toLong
@@ -86,25 +153,18 @@ We could then write out ``csvDataExtractor`` function in the following way:
       catCity
     )
 
-    val staysAt = Relation[Cat, City](catID, "STAYS_AT", catCityID)
+    val livesIn = Relation[Cat, City](catID, "LIVES_IN", catCityID)
+    val contains = Relation[City, Cat](catCityID, "CONTAINS", catID)
 
     val graphData = GraphData()
     graphData.addNode(catID, singleCat)
     graphData.addNode(catCityID, singleCity)
-    graphData.addRelations(staysAt)
+    graphData.addRelations(staysAt, contains)
 
     graphData
   }
 
-* The first five lines are storing data from a single row of the CSV, by looking up the appropriate headers.
-* Next, we use a `Constructor <https://alvinalexander.com/scala/scala-class-examples-constructors-case-classes-parameters/>`_ to create an instance of the ``Cat`` class, for the cat pertaining to a particular row in the CSV.
-* We then do the same for the ``City`` class.
-* We then create a ``Relation`` between two nodes on the graph. To do this, we specify the classes the relation is formed between, and then the unique IDs with the relation in between them.
-* Next, an instance of the ``GraphData`` class is created, and we add the nodes and the relations to it.
-
-.. note:: If we have multiple cats staying at the same city, all we have to do is keep the ``CityID`` the same in the CSV file. This is because the ``City`` nodes on the graph are associated with the ``CityID`` number (``CityID`` is the *unique ID* of the node), and so only one node is created.
-
-  The same can be said about having multiple cats with similar attributes: the ``ID`` parameter should differentiate between them.
+.. note:: You may have noticed that in the CSV file, two cats (namely, Coppe and Marie) both live in the same city (Crossbell). That does not, however, lead to two nodes being created for the same city. A node is defined by it's unique key and it's instance. In this example, the unique key is the city ID (which is the same for both cats - ``100``) and the instance is the corresponding object ``singleCity``, which is again identical for both the cats (the attributes are ``100`` and ``"Crossbell"``, respectively). As such, the same node is used, and the city doesn't duplicate in the graph.
 
 Outputs
 -------
