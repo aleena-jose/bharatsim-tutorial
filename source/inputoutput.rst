@@ -49,16 +49,10 @@ Using the User-Defined function
 
 The user-defined function (``myCsvDataExtractor``, in our case) will depend on the data we want to extract. As an example, let's consider that we have data on a number of cats, each with their own ID, name, city of residence, an integer ID for the city, and a particular colour. Our CSV file would look like
 
-.. code-block:: csv
-
-  ID,Name,City,CityID,Colour
-  0,Mittens,Sydney,2000,White
-  1,Tabby,London,1050,Brown
-  2,Garfield,LasagnaLand,7,Orange
-  3,Elizabeth,Mishelam,102,Black
-  4,Coppe,Crossbell,100,Black
-  5,Marie,Crossbell,100,Orange
-  6,Antoine,Zeiss,62,Brown
+.. csv-table:: input.csv
+   :file: _static/csvs/example_input.csv
+   :widths: 5, 10, 10, 10, 10
+   :header-rows: 1
 
 Let's assume we've already defined the following:
 
@@ -239,10 +233,11 @@ Next, we add the following code snippet inside ``simulation.defineSimulation`` i
 
 The output is
 
-.. code-block:: csv
+.. csv-table:: output.csv
+   :file: _static/csvs/single_output.csv
+   :widths: 20, 20, 20
+   :header-rows: 1
 
-  Header1,Header2,Header3
-  row0,row0,row0
 
 .. hint:: In case you want your outputs generated *after* the simulation is completed, you can place the above 4 lines of code inside ``simulation.onCompleteSimulation``.
 
@@ -270,14 +265,10 @@ where ``myCsvSpecs`` is the user-defined class which requires the context as an 
 
 Now, the output is
 
-.. code-block:: csv
-
-  Header1,Header2,Header3
-  row1,row1,row1
-  row2,row2,row2
-  row3,row3,row3
-  row4,row4,row4
-  row5,row5,row5
+.. csv-table:: output.csv
+   :file: _static/csvs/multiple_output_truncated.csv
+   :widths: 20, 20, 20
+   :header-rows: 1
 
 and so on, until the tick at which the simulation ends.
 
