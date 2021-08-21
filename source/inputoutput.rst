@@ -49,16 +49,10 @@ Using the User-Defined function
 
 The user-defined function (``myCsvDataExtractor``, in our case) will depend on the data we want to extract. As an example, let's consider that we have data on a number of cats, each with their own ID, name, city of residence, an integer ID for the city, and a particular colour. Our CSV file would look like
 
-.. code-block:: csv
-
-  ID,Name,City,CityID,Colour
-  0,Mittens,Sydney,2000,White
-  1,Tabby,London,1050,Brown
-  2,Garfield,LasagnaLand,7,Orange
-  3,Elizabeth,Mishelam,102,Black
-  4,Coppe,Crossbell,100,Black
-  5,Marie,Crossbell,100,Orange
-  6,Antoine,Zeiss,62,Brown
+.. csv-table:: input.csv
+   :file: _static/csvs/example_input.csv
+   :widths: 5, 10, 10, 10, 10
+   :header-rows: 1
 
 Let's assume we've already defined the following:
 
