@@ -3,15 +3,113 @@ Inputs and Outputs in BharatSim
 
 Inputs
 ------
-**to be completed**
 
-* function should feed in the csv file 1 row at a time
-* data gets 'ingested' and graphNodes are created
+BharatSim uses a `CSV <https://en.wikipedia.org/wiki/Comma-separated_values>`_ file as an input. It is equipped to **ingest** data from a file, by reading it and converting the data to the network.
+
+In order to ingest data, we need to make use of three functions:
+
+* ``ingestData``, which is a method of the ``simulation`` class
+* ``ingestCSVData``, a method of the ``ContextBuilder`` object
+* A user-defined function which tells the program what data to extract and what to do with it
+
+Using the framework-defined functions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+First, we need to import the necessary packages:
+
+.. code-block:: scala
+
+  import com.bharatsim.engine.ContextBuilder._
+  import com.bharatsim.engine.execution.Simulation
+  import com.bharatsim.engine.graph.ingestion.{GraphData, Relation}
+
+.. hint:: You'll see why we import ``GraphData`` and ``Relation`` in the next section!
+
+The next step is to create an instance of the simulation class
+
+.. code-block:: scala
+
+  val simulation = Simulation()
+
+We then ingest the data in the following way:
+
+.. code-block:: scala
+
+  simulation.ingestData(implicit context => {
+    ingestCSVData("citizen10k.csv", csvDataExtractor)
+    logger.debug("Ingestion done")
+  })
+
+where ``csvDataExtractor`` is the user-defined function.
+
+.. note:: The above block of code essentially causes the data from the CSV file to be read one line at a time
+
+Using the User-Defined function
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The user-defined function (``csvDataExtractor``, in our case) will depend on the data we want to extract. As an example, let's consider that we have data on a number of cats, each with their own ID, name, city of residence, an integer ID for the city, and a particular colour. Our CSV file would look like
+
+.. code-block:: csv
+
+  ID,Name,City,CityID,Colour
+  0,Mittens,Sydney,2000,White
+  1,Tabby,London,1050,Brown
+  2,Garfield,LasagnaLand,7,Orange
+  3,Elizabeth,Mishelam,102,Black
+  4,Coppe,Crossbell,100,Black
+  5,Antoine,Zeiss,62,Brown
+
+Let's assume we've already defined the following:
+
+* a case class ``Cat`` with three attributes, ``id``, ``name`` and ``colour``
+* another case class ``City`` with two attributes, ``id`` and ``cityname``
+We could then write out ``csvDataExtractor`` function in the following way:
+
+.. code-block:: scala
+
+  private def csvDataExtractor(map: Map[String, String](implicit context: Context): GraphData = {
+
+    val catName = map("Name").toString
+    val catID = map("ID").toLong
+    val catCity = map("City").toString
+    val catCityID = map("CityID").toLong
+    val catColour = map("Colour").toString
+
+    val singleCat: Cat = Cat(
+      catID,
+      catName,
+      catColour
+    )
+
+    val singleCity: City = City(
+      catCityId,
+      catCity
+    )
+
+    val staysAt = Relation[Cat, City](catID, "STAYS_AT", catCityID)
+
+    val graphData = GraphData()
+    graphData.addNode(catID, singleCat)
+    graphData.addNode(catCityID, singleCity)
+    graphData.addRelations(staysAt)
+
+    graphData
+  }
+
+* The first five lines are storing data from a single row of the CSV, by looking up the appropriate headers.
+* Next, we use a `Constructor <https://alvinalexander.com/scala/scala-class-examples-constructors-case-classes-parameters/>`_ to create an instance of the ``Cat`` class, for the cat pertaining to a particular row in the CSV.
+* We then do the same for the ``City`` class.
+* We then create a ``Relation`` between two nodes on the graph. To do this, we specify the classes the relation is formed between, and then the unique IDs with the relation in between them.
+* Next, an instance of the ``GraphData`` class is created, and we add the nodes and the relations to it.
+
+.. note:: If we have multiple cats staying at the same city, all we have to do is keep the ``CityID`` the same in the CSV file. This is because the ``City`` nodes on the graph are associated with the ``CityID`` number (``CityID`` is the *unique ID* of the node), and so only one node is created.
+
+  The same can be said about having multiple cats with similar attributes: the ``ID`` parameter should differentiate between them.
 
 Outputs
 -------
 
-A convenient way to store the output is by using a `CSV <https://en.wikipedia.org/wiki/Comma-separated_values>`_ file. Scala is `capable of writing to files <https://alvinalexander.com/scala/how-to-write-text-files-in-scala-printwriter-filewriter/>`_, but BharatSim simplifies the process when it comes to CSV outputs.
+A convenient way to store the output is by using a CSV file. Scala is `capable of writing to files <https://alvinalexander.com/scala/how-to-write-text-files-in-scala-printwriter-filewriter/>`_, but BharatSim simplifies the process when it comes to CSV outputs.
 
 .. note:: In case the quantities you'd like to output are fairly simple, you could use Scala's ``println`` function to directly output what you need.
 
