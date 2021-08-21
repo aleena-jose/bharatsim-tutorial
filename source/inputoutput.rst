@@ -233,10 +233,11 @@ Next, we add the following code snippet inside ``simulation.defineSimulation`` i
 
 The output is
 
-.. code-block:: csv
+.. csv-table:: output.csv
+   :file: _static/csvs/single_output.csv
+   :widths: 20, 20, 20
+   :header-rows: 1
 
-  Header1,Header2,Header3
-  row0,row0,row0
 
 .. hint:: In case you want your outputs generated *after* the simulation is completed, you can place the above 4 lines of code inside ``simulation.onCompleteSimulation``.
 
@@ -264,14 +265,10 @@ where ``myCsvSpecs`` is the user-defined class which requires the context as an 
 
 Now, the output is
 
-.. code-block:: csv
-
-  Header1,Header2,Header3
-  row1,row1,row1
-  row2,row2,row2
-  row3,row3,row3
-  row4,row4,row4
-  row5,row5,row5
+.. csv-table:: output.csv
+   :file: _static/csvs/multiple_output_truncated.csv
+   :widths: 20, 20, 20
+   :header-rows: 1
 
 and so on, until the tick at which the simulation ends.
 
