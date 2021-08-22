@@ -1,6 +1,3 @@
-
-
-
 Introduction
 ------------
 
@@ -107,3 +104,48 @@ After the behaviours are defined, they need to be added to the simulation in the
 Each agent goes through the above-mentioned behaviours chronologically during each tick. For example, if there are 100 agents in the simulation, all 100 of them go through the behaviours as listed chronologically above, and this process repeats at each tick.
 
 
+
+Saving your Output
+~~~~~~~~~~~~~~~~~~
+
+Suppose you wanted your output to give you the numbers of susceptible, infected and recovered people at every time step. You can then write the following:
+
+.. code-block:: scala
+
+  import com.bharatsim.engine.Context
+  import com.bharatsim.engine.graph.patternMatcher.MatchCondition._
+  import com.bharatsim.engine.listeners.CSVSpecs
+  import com.bharatsim.examples.epidemiology.SIR.InfectionStatus.{Infected, Removed, Susceptible}
+  
+  class SIROutputSpec(context: Context) extends CSVSpecs {
+    override def getHeaders: List[String] =
+      List(
+        "Step",
+        "Susceptible",
+        "Infected",
+        "Removed"
+      )
+  
+    override def getRows(): List[List[Any]] = {
+      val graphProvider = context.graphProvider
+      val label = "Person"
+      val row = List(
+        context.getCurrentStep,
+        graphProvider.fetchCount(label, "infectionState" equ Susceptible),
+        graphProvider.fetchCount(label, "infectionState" equ Infected),
+        graphProvider.fetchCount(label, "infectionState" equ Removed)
+      )
+      List(row)
+    }
+  }
+ 
+* The first column (Step) stores the current time step, obtained using the ``context.getCurrentStep`` function
+* The next 3 columns store the number of Susceptible, Infected and Removed people respectively, by fetching the total number of ``Person`` nodes on the graph with the appropriate `infection status <#>`_.
+
+Now we simply have to register it in the simulation. Note that the following code snippet should be located inside ``simulation.defineSimulation`` in the main function:
+
+.. code-block:: scala
+
+  SimulationListenerRegistry.register(
+    new CsvOutputGenerator("src/main/resources/output.csv", new SIROutputSpec(context))
+      )
