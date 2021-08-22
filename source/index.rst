@@ -13,4 +13,5 @@ In this tutorial documentation, we look at examples in Epidemiology.
    setup
    inputoutput
    miscellaneous
+   Building An SIR Model
    epidemiology-sir-model-as-differential-equations
