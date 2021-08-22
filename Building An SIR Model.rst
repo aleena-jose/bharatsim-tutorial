@@ -17,7 +17,7 @@ The model consists of different objects and classes and can be separated into in
 
 1. Nodes of the Network: These include ``House``, ``School``, ``Office``, etc, which essentially correspond to the different geographical locations in which the agents spend their time according to some schedule. These classes have some attributes associated with them. For eg. ``getContactProbability`` is one such function that gives the transmission probability of the disease in that particular location. In order to add new Nodes to the Network (for eg. Hospital), one has to create a new scala class inside the same package corresponding to the new Node.
 
-.. image:: D://Soumil/Project/Docs/House.png
+.. image:: House.png
 
 
 
