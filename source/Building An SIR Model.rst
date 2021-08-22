@@ -4,7 +4,7 @@
 Introduction
 ------------
 
-Bharatsim is an open-source large-scale agent-based simulation framework that allows you to build and simulate sophisticated agent-based models. Agents form the main component of such a simulation. They are entities that are defined with a set of parameters and obey certain specified conditions as the simulation runs.
+BharatSim is an open-source large-scale agent-based simulation framework that allows you to build and simulate sophisticated agent-based models. Agents form the main component of such a simulation. They are entities that are defined with a set of parameters and obey certain specified conditions as the simulation runs.
 
 In the purview of the SIR model, the agents are people, which go about their daily lives and follow regular schedules. Here, the parameters defining an agent are a unique agent id, their age, their infection status, the time for which they remain infected and so on. The framework allows you to introduce new parameters as and when required.
 
@@ -17,7 +17,7 @@ The model consists of different objects and classes and can be separated into in
 
 1. Nodes of the Network: These include ``House``, ``School``, ``Office``, etc, which essentially correspond to the different geographical locations in which the agents spend their time according to some schedule. These classes have some attributes associated with them. For eg. ``getContactProbability`` is one such function that gives the transmission probability of the disease in that particular location. In order to add new Nodes to the Network (for eg. Hospital), one has to create a new scala class inside the same package corresponding to the new Node.
 
-.. image:: D://Soumil/Project/Docs/House.png
+.. image:: House.png
 
 
 
@@ -94,7 +94,7 @@ Similarly, if a person is infected, they can move to the ``Removed`` compartment
 
 It is important that one defines the Behaviours in the order that they are to be compiled. This is based on the epidemiological SIR model, where an agent transitions from one compartment to another in a chronological manner, from S to I to R, as shown below.
 
-.. image:: D://Soumil/Project/Docs/SIR-compartment.png
+.. image:: SIR-compartment.png
 
 After the behaviours are defined, they need to be added to the simulation in the order in which they are executed. This is done using the framework defined ``addBehaviour`` function.
 
