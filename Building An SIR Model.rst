@@ -27,28 +27,28 @@ The model consists of different objects and classes and can be separated into in
 
 .. code::
 
-package com.bharatsim.examples.epidemiology.sir
+   package com.bharatsim.examples.epidemiology.sir
 
-import com.bharatsim.engine.basicConversions.StringValue
-import com.bharatsim.engine.basicConversions.decoders.BasicDecoder
-import com.bharatsim.engine.basicConversions.encoders.BasicEncoder
+   import com.bharatsim.engine.basicConversions.StringValue
+   import com.bharatsim.engine.basicConversions.decoders.BasicDecoder
+   import com.bharatsim.engine.basicConversions.encoders.BasicEncoder
 
-object InfectionStatus extends Enumeration {
-  type InfectionStatus = Value
-  val Susceptible,Exposed, Infected, Removed = Value
+   object InfectionStatus extends Enumeration {
+     type InfectionStatus = Value
+     val Susceptible,Exposed, Infected, Removed = Value
 
-  implicit val infectionStatusDecoder: BasicDecoder[InfectionStatus] = {
-    case StringValue(v) => withName(v)
-    case _ => throw new RuntimeException("Infection status was not stored as a string")
-  }
+     implicit val infectionStatusDecoder: BasicDecoder[InfectionStatus] = {
+        case StringValue(v) => withName(v)
+        case _ => throw new RuntimeException("Infection status was not stored as a string")
+     }
 
-  implicit val infectionStatusEncoder: BasicEncoder[InfectionStatus] = {
-    case Susceptible => StringValue("Susceptible")
-    case Exposed => StringValue("Exposed")
-    case Infected => StringValue("Infected")
-    case Removed => StringValue("Removed")
-  }
-}
+     implicit val infectionStatusEncoder: BasicEncoder[InfectionStatus] = {
+         case Susceptible => StringValue("Susceptible")
+         case Exposed => StringValue("Exposed")
+         case Infected => StringValue("Infected")
+         case Removed => StringValue("Removed")
+     }
+   }
 
 
 4. Output Specification: ``CSVSpecs`` is a framework defined trait which helps in generating a .csv file for the simulation output. The ``SEIROutputSpec`` is a class that extends this trait and defines how the output ``.csv`` file should look. Inside this class, the ``getHeaders`` basically specifies the list of column headers in the ``.csv`` file, while the ``getRows`` fetches the values of these quantities from context. For eg. one can use the ``fetchcount`` function in the framework defined trait ``graphProvider`` to display the number of people in each compartment at every tick.
@@ -56,42 +56,54 @@ object InfectionStatus extends Enumeration {
 Person class
 ------------
 
-The ``Person`` class is an extension of the framework defined ``Agent``class. It defines all the attributes of an agent, and also the behaviours which the agent follows throughout the simulation.
+The ``Person`` class is an extension of the framework defined ``Agent`` class. It defines all the attributes of an agent, and also the behaviours which the agent follows throughout the simulation.
 
 An attribute is essentially a characteristic of an agent like age, agent id and so on. It can also include certain quantities associated with an agent like its current epidemiological state, or the time for which it is infected. The attributes are defined in the Person class as follows:-
 
 .. code::
+
    case class Person(id: Long, age: Int, infectionState: InfectionStatus, infectionDur: Int, betaMultiplier:Double) extends Agent
 
 Some attributes have constant values throughout the simulation like age, agent id, while there are some attributes which are ‘dynamic’ and their values change as the simulation runs.
 
-In this framework, A **Behaviour**, an user-defined function whose arguments are the dynamic attributes. It acts on every agent at each tick.  An example for a behaviour  which counts the number of days for which an agent is infected is as follows:
+In this framework, A **Behaviour** is an user-defined function whose arguments are the dynamic attributes. It acts on every agent at each tick.  An example for a behaviour which counts the number of days for which an agent is infected, is as follows:
 
 .. code::
 
-private val incrementInfectionDay: Context => Unit = (context: Context) => {
- if (isInfected && context.getCurrentStep % Disease.numberOfTicksInADay == 0) {
-   updateParam("infectionDur", infectionDur + 1)
- }
-}
-
-Similarly, a Behaviour could be a rule which governs the transfer of agents from one compartment to another. For example, if person X is in the same location as an infected person Y, person X will also get infected, with some probability.
-Similarly, if a person is **Infected**, they can move to the **Removed compartment, with a certain rate, :math:`\lambda_i`. The code snippet below is a Behaviour ``checkForRecovery`` that performs this transition.
-
-private val checkForRecovery: Context => Unit = (context: Context) => {
- if (isInfected) {
-   val RecoveryProb = Disease.lambdaI*Disease.dt
-   val InfectionState = if (biasedCoinToss(RecoveryProb)) "Removed" else "Infected"
-   if (InfectionState == "Removed") {
-     updateParam("infectionState", Removed)
+   private val incrementInfectionDay: Context => Unit = (context: Context) => {
+      if (isInfected && context.getCurrentStep % Disease.numberOfTicksInADay == 0) {
+         updateParam("infectionDur", infectionDur + 1)
+      }
    }
- }
-}
 
+Moreover, a Behaviour could be a rule which governs the transfer of agents from one compartment to another. For example, if person X is in the same location as an infected person Y, person X will also get infected, with some probability.
+Similarly, if a person is infected, they can move to the ``Removed`` compartment, with a certain rate, :math:`\lambda_I`. The code snippet below is a Behaviour ``checkForRecovery`` that performs this transition.
 
+.. code::
+
+   private val checkForRecovery: Context => Unit = (context: Context) => {
+       if (isInfected) {
+           val RecoveryProb = Disease.lambdaI*Disease.dt
+           val InfectionState = if (biasedCoinToss(RecoveryProb)) "Removed" else "Infected"
+           if (InfectionState == "Removed") {
+                updateParam("infectionState", Removed)
+           }
+       }
+   }
 
 
 It is important that one defines the Behaviours in the order that they are to be compiled. This is based on the epidemiological SIR model, where an agent transitions from one compartment to another in a chronological manner, from S to I to R, as shown below.
 
+.. image:: D://Soumil/Project/Docs/SIR-compartment.png
+
+After the behaviours are defined, they need to be added to the simulation in the order in which they are executed. This is done using the framework defined ``addBehaviour`` function.
+
+.. code::
+
+   addBehaviour(incrementInfectionDay)
+   addBehaviour(checkForInfection)
+   addBehaviour(checkForRecovery)
+
+Each agent goes through the above-mentioned behaviours chronologically during each tick. For example, if there are 100 agents in the simulation, all 100 of them go through the behaviours as listed chronologically above, and this process repeats at each tick.
 
 
