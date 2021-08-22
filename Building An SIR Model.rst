@@ -94,7 +94,7 @@ Similarly, if a person is infected, they can move to the ``Removed`` compartment
 
 It is important that one defines the Behaviours in the order that they are to be compiled. This is based on the epidemiological SIR model, where an agent transitions from one compartment to another in a chronological manner, from S to I to R, as shown below.
 
-.. image:: D://Soumil/Project/Docs/SIR-compartment.png
+.. image:: SIR-compartment.png
 
 After the behaviours are defined, they need to be added to the simulation in the order in which they are executed. This is done using the framework defined ``addBehaviour`` function.
 
