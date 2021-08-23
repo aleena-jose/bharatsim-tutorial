@@ -1,2 +1,2 @@
 Sphinx
-furo
+sphinx-rtd-theme
