@@ -15,3 +15,4 @@ In this tutorial documentation, we look at examples in Epidemiology.
    miscellaneous
    building-an-sir-model
    epidemiology-sir-model-as-differential-equations
+   real_locations
