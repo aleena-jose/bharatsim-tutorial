@@ -15,4 +15,3 @@ In this tutorial documentation, we look at examples in Epidemiology.
    epidemiology
    firstprogram
    miscellaneous
-   real_locations
