@@ -31,14 +31,20 @@ In a closed population with no births or deaths, the SEIR model can be defined u
    \frac{dR}{dt} = \gamma I
 
                                                
-where the total population, N=S+E+I+R.
+where the total population,
+
+.. math::
+
+ N = S + E + I + R
 
 Introducing the incubation period does not change the total number of infections. The incubation period prolongs the duration of the epidemic, but with a short incubation period the peak in the number of infected becomes tall and sharp compared to another model with a longer incubation period. The graphs below show simple SEIR models with incubation periods 5 and 10 days respectively.
 
 .. image:: /seir2.png 
 .. image:: /seir.png
 
-In the algorithm, if the agent is susceptible, we compute the number of infected individuals in their local neighbourhood who could potentially infect them (I). Then, during each time step δt, they are transferred to the Exposed compartment, with some probability, 
+The above equations can be solved numerically to get deterministic results but, as explained in <put in a link to the section that @SoumilK1 and @prathithbhargav are working on>, we can also solve it stochastically using a similar algorithm. 
+
+In the algorithm, if the agent is susceptible, we compute the number of infected individuals they come in contact with who could potentially infect them (I). Then, during each time step δt, they are transferred to the Exposed compartment, with some probability, 
 
 .. math::
 
