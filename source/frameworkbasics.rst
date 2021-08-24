@@ -1,8 +1,11 @@
+Framework Basics
+================
+
 Inputs and Outputs in BharatSim
-===============================
+-------------------------------
 
 Inputs
-------
+~~~~~~
 
 BharatSim uses a `CSV <https://en.wikipedia.org/wiki/Comma-separated_values>`_ file as an input. It is equipped to **ingest** data from a file, by reading it and converting the data to the network.
 
@@ -13,7 +16,7 @@ In order to ingest data, we need to make use of three functions:
 * A user-defined function which tells the program what data to extract and what to do with it
 
 Using the framework-defined functions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 First, we need to import the necessary packages:
 
@@ -45,7 +48,7 @@ where ``myCsvDataExtractor`` is the user-defined function.
 .. note:: The above block of code essentially causes the data from the CSV file to be read one line at a time
 
 Using the User-Defined function
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The user-defined function (``myCsvDataExtractor``, in our case) will depend on the data we want to extract. As an example, let's consider that we have data on a number of cats, each with their own ID, name, city of residence, an integer ID for the city, and a particular colour. Our CSV file would look like
 
@@ -161,14 +164,14 @@ Putting it all together, our user-defined ``myCsvDataExtractor`` function is
 .. note:: You may have noticed that in the CSV file, two cats (namely, Coppe and Marie) both live in the same city (Crossbell). That does not, however, lead to two nodes being created for the same city. A node is defined by it's unique key and it's instance. In this example, the unique key is the city ID (which is the same for both cats - ``100``) and the instance is the corresponding object ``singleCity``, which is again identical for both the cats (the attributes are ``100`` and ``"Crossbell"``, respectively). As such, the same node is used, and the city doesn't duplicate in the graph.
 
 Outputs
--------
+~~~~~~~
 
 A convenient way to store the output is by using a CSV file. Scala is `capable of writing to files <https://alvinalexander.com/scala/how-to-write-text-files-in-scala-printwriter-filewriter/>`_, but BharatSim simplifies the process when it comes to CSV outputs.
 
 .. note:: In case the quantities you'd like to output are fairly simple, you could use Scala's ``println`` function to directly output what you need.
 
 Saving your output to a CSV file
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 BharatSim relies on a trait called ``SimulationListener`` to help output data .
 
@@ -187,7 +190,7 @@ The BharatSim engine also contains a class called ``CsvOutputGenerator``, an ext
 This class writes the headers at the start of the simulation, writes the rows at the start of every time step, and closes the writer at the end of the simulation.
 
 Output at a single instant of time
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+__________________________________
 
 We can define a class as follows:
 
@@ -242,7 +245,7 @@ The output is
 .. hint:: In case you want your outputs generated *after* the simulation is completed, you can place the above 4 lines of code inside ``simulation.onCompleteSimulation``.
 
 Output at every time step
-^^^^^^^^^^^^^^^^^^^^^^^^^
+_________________________
 
 If we'd like to investigate the dynamics of the simulation as it evolves with time, we essentially need to call the three methods described above every time step. BharatSim simplifies things with ``SimulationListenerRegistry``, which allows us to **register** the output generator in the simulation (similar to how we registered `agents <#>`_), so that it writes data to the CSV file at every time step.
 
@@ -281,6 +284,7 @@ and so on, until the tick at which the simulation ends.
     SimulationListenerRegistry.register(
         new CsvOutputGenerator("src/main/resources/output_" + currentTime + ".csv", new SIROutputSpec(context))
       )
+      
   Note that ``Date().getTime`` returns the time as a `UNIX timestamp <https://en.wikipedia.org/wiki/Unix_time>`_, and so your output will contain a long integer after the underscore.
 
 For a more detailed example of how to output data to a CSV file, please refer to the `Writing your first program <#>`_ section.
