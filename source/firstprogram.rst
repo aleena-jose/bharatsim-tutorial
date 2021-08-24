@@ -139,7 +139,7 @@ Suppose you wanted your output to give you the numbers of susceptible, infected 
   }
  
 * The first column (Step) stores the current time step, obtained using the ``context.getCurrentStep`` function
-* The next 3 columns store the number of Susceptible, Infected and Removed people respectively, by fetching the total number of ``Person`` nodes on the graph with the appropriate Infection Status.
+* The next 3 columns store the number of Susceptible, Infected and Removed people respectively, by fetching the total number of ``Person`` nodes on the graph with the appropriate appropriate `infection status <#>`_.
 
 Now we simply have to register it in the simulation. Note that the following code snippet should be located inside ``simulation.defineSimulation`` in the main function:
 
