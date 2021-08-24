@@ -11,7 +11,7 @@ SEIR
 
 This is a generalisation made on the basic SIR model to include the Exposed state of the individuals. The exposed compartment (E) represents incubation period for the disease, that is a latent phase where the individual is infected but not yet infectious. The infected people can infect the susceptible (S) people who will be moved to the exposed (E) compartment before they are moved to the infected (I) compartment. From the infected compartment they will be removed (R) eventually.  The diagram below shows how the individuals move through each compartment in this model.
 
-.. image:: /seir-compartments.png
+.. image:: source/_static/images/seir-compartments.png
 
 The rate of transmission of the disease from an infected to a susceptible is represented by α. The incubation rate, β, is the rate of latent individuals becoming infectious. The average time an individual spends in the exposed compartment, the incubation period of the disease is thus given by 1/β. At last γ represents the rate of removal of infected individuals from Infected compartment.
 
@@ -39,8 +39,8 @@ where the total population,
 
 Introducing the incubation period does not change the total number of infections. The incubation period prolongs the duration of the epidemic, but with a short incubation period the peak in the number of infected becomes tall and sharp compared to another model with a longer incubation period. The graphs below show simple SEIR models with incubation periods 5 and 10 days respectively.
 
-.. image:: /seir2.png 
-.. image:: /seir.png
+.. image:: source/_static/images/seir2.png 
+.. image:: source/_static/images/seir.png
 
 The above equations can be solved numerically to get deterministic results but, as explained in <put in a link to the section that @SoumilK1 and @prathithbhargav are working on>, we can also solve it stochastically using a similar algorithm. 
 
