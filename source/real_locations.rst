@@ -1,5 +1,5 @@
-Checking the people in a location (SIR)
-=======================================
+Computing the number of people in a location
+============================================
 
 What we were doing
 ------------------
