@@ -57,4 +57,21 @@ html_static_path = ['_static']
 
 
 # Logo
-html_logo = "_static/logos/bharatsim-temporary-logo.svg"
+html_logo = "_static/logos/bharatsim-temporary-logo.png"
+
+# If true, “Created using Sphinx” is shown in the HTML footer. Default is True.
+html_show_sphinx = False
+
+# If true, “(C) Copyright …” is shown in the HTML footer. Default is True.
+html_show_copyright = False
+
+# Show last updated as 'dd monthname yyyy'
+html_last_updated_fmt = '%B %d, %Y'
+
+# Theme Specific Options
+# https://sphinx-rtd-theme.readthedocs.io/en/stable/configuring.html
+html_theme_options = {
+    'collapse_navigation': False,
+    'logo_only': True,
+    'style_external_links': True,
+}
