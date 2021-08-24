@@ -1,5 +1,5 @@
-Checking the people in a location (SIR)
-=======================================
+Computing the number of people in a location
+============================================
 
 What we were doing
 ------------------
@@ -31,7 +31,7 @@ Let's take a closer look at the first line, how we calculate ``totalNeighbourCou
 
   val totalNeighbourCount = node.getConnectionCount(node.getRelation[Person]().get)
 
-Assume that the node was an ``Office``. In *that* case,
+Assume that the node was an ``Office``. In that case,
 
 .. code-block:: scala
 
@@ -79,7 +79,7 @@ Next, we need to register the behaviour so that it's executed every tick:
 
   addBehaviour(checkCurrentLocation)
 
-.. hint:: ``updateParam`` only updates the value of the attribute at the **end** of the tick. Thus, for all practical purposes, it's useful to view the function as one that changes the value of the attribute on the *subsequent tick*. As such, we store the place the person is expected to be on the next tick, and hencee use ``context.getCurrentStep+1`` as an argument to ``schedule.getForStep``.
+.. hint:: ``updateParam`` only updates the value of the attribute at the **end** of the tick. Thus, for all practical purposes, it's useful to view the function as one that changes the value of the attribute on the *subsequent tick*. As such, we store the place the person is expected to be on the next tick, and hence use ``context.getCurrentStep+1`` as an argument to ``schedule.getForStep``.
 
 Now, we need use this attribute when we compute ``totalNeighbourCount`` and ``infectedNeighbourCount``. The basic structure of the function remains the same:
 
@@ -132,7 +132,7 @@ Putting it all together, our function is
 
 
 Checking the locations without a ``currentLocation`` attribute
---------------------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``updateParam`` updates a node on the graph, and is called once per person per tick. That can potentially slow the program down, and another possibility is to avoid using it entirely. We'll still do the same thing - get the schedule for the agent, check if they're actually at the place you're looking at, and then get the total and infected counts.
 
@@ -157,7 +157,7 @@ We now find everyone with the appropriate relation:
 
     val peopleWithRelation: Iterator[GraphNode] = node.getConnections(node.getRelation[Person]().get)
 
-.. note:: ``peopleWithRelation`` is a convenient data structure called an `iterator <https://docs.scala-lang.org/overviews/collections/iterators.html>_`. It's very useful if you want to loop through a container, as we do here.
+.. note:: ``peopleWithRelation`` is a convenient data structure called an `iterator <https://docs.scala-lang.org/overviews/collections/iterators.html>`_. It's very useful if you want to loop through a container, as we do here.
 
 Now, we want to check the ``currentLocation`` and ``infectionState`` for every one of these people. We iterate over the iterator using the ``foreach`` method:
 
