@@ -284,6 +284,7 @@ and so on, until the tick at which the simulation ends.
     SimulationListenerRegistry.register(
         new CsvOutputGenerator("src/main/resources/output_" + currentTime + ".csv", new SIROutputSpec(context))
       )
+      
   Note that ``Date().getTime`` returns the time as a `UNIX timestamp <https://en.wikipedia.org/wiki/Unix_time>`_, and so your output will contain a long integer after the underscore.
 
 For a more detailed example of how to output data to a CSV file, please refer to the `Writing your first program <#>`_ section.
