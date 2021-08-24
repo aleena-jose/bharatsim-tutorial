@@ -11,7 +11,7 @@ In this tutorial documentation, we look at examples in Epidemiology.
    :caption: Contents:
 
    setup
-   inputoutput
+   frameworkbasics
    miscellaneous
    building-an-sir-model
    epidemiology-sir-model-as-differential-equations

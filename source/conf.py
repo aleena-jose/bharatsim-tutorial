@@ -73,5 +73,6 @@ html_last_updated_fmt = '%B %d, %Y'
 html_theme_options = {
     'collapse_navigation': False,
     'logo_only': True,
+    'navigation_depth': 5,
     'style_external_links': True,
 }
