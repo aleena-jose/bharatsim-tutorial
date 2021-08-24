@@ -114,6 +114,7 @@ Finally, we return the infected fraction,
 
     infectedNeighbourCount.toDouble / totalNeighbourCount.toDouble
 
+Putting it all together, our function is
 
 .. code-block:: scala
 
