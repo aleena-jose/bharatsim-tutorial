@@ -35,6 +35,11 @@ The following are the differential equations governing the SIR Model, as describ
     \frac{\mathrm{d}I }{\mathrm{d} t} = \beta S(t) I(t) - \gamma I(t)   (ii)
     \frac{\mathrm{d}R }{\mathrm{d} t} = \gamma I(t)                     (iii)
 
+Why these Equations?
+^^^^^^^^^^^^^^^^^^^^
+Equation (i) means that the decrease in the number of Susceptible individuals is dependent on the number of Individuals Infected and Susceptible at any given time t. This goes by the simple logic that if more people are already infected in the population, more people would likely become Infected, and if more Susceptible people are there, there is a better chance of an Infected Person meeting someone Susceptible than in a case having lesser Susceptible people. 
+If one adds equations (i),(ii) and (iii) up, they will find that the total adds up to 0. By differntial calculus, we know that of the derivative of any function is zero, then the function is constant. Here that function is the total number of people in a population, which one can denote as :math"`N`, which means that this is a *Closed Population*. 
+
 
     
 
