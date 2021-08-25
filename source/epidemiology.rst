@@ -31,9 +31,11 @@ The Equations
 ^^^^^^^^^^^^^^^^^^^
 The following are the differential equations governing the SIR Model, as described above:
 .. math::
-    \frac{\mathrm{d}S }{\mathrm{d} t} = -\beta S(t) I(t)
-    \frac{\mathrm{d}I }{\mathrm{d} t} = \beta S(t) I(t) - \gamma I(t)
-    \frac{\mathrm{d}R }{\mathrm{d} t} = \gamma I(t)
+    \frac{\mathrm{d}S }{\mathrm{d} t} = -\beta S(t) I(t)                (i)
+    \frac{\mathrm{d}I }{\mathrm{d} t} = \beta S(t) I(t) - \gamma I(t)   (ii)
+    \frac{\mathrm{d}R }{\mathrm{d} t} = \gamma I(t)                     (iii)
+
+
     
 
 The SEIR Model
