@@ -20,6 +20,22 @@ In the SIR Model, initially all individuals are Susceptible, while the Infection
 
 The SIR model that is explained below is on an isolated population. The other condition imposed on this population is that people who have been ``Removed`` will not be able to get Susceptible. 
 
+    
+What the following terms mean in the Equations:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+:math:`S(t)` means the number of Susceptible people at a given time, :math:`t` 
+:math:`I(t)` means the number of Infected people at a given time, :math:`t` 
+:math:`R(t)` means the number of Removed people at a given time, :math:`t` 
+
+The Equations
+^^^^^^^^^^^^^^^^^^^
+The following are the differential equations governing the SIR Model, as described above:
+.. math::
+    \frac{\mathrm{d}S }{\mathrm{d} t} = -\beta S(t) I(t)
+    \frac{\mathrm{d}I }{\mathrm{d} t} = \beta S(t) I(t) - \gamma I(t)
+    \frac{\mathrm{d}R }{\mathrm{d} t} = \gamma I(t)
+    
+
 The SEIR Model
 --------------
 
