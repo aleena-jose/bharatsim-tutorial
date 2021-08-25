@@ -56,3 +56,6 @@ the recovered compartment with a probability
 .. math::
 
  P_{R} = \lambda_I \delta t.
+
+[1]: A new SAIR model on complex networks for analysing the 2019 novel coronavirus (COVID-19)
+Congying Liu, Xiaoqun Wu, Riuwu Niu, Xiuqi Wu, and Ruguo Fan
