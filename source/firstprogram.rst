@@ -19,48 +19,64 @@ The Network class gives a sense of geography to the model. The different compone
 The first step to building your model is to create locations which are part of the Network, by creating a new scala `class<https://docs.scala-lang.org/tour/classes.htm>`. You can create a new class for adding houses to the network, in the following way:- 
 
 1. Since ``House`` is a component of the Network, you have to import the Network class. 
+ 
 .. code-block:: scala
-   import com.bharatsim.engine.models.Network
+   
+  import com.bharatsim.engine.models.Network
       
 2. The ``House`` class is a `case class <https://docs.scala-lang.org/tour/case-classes.html>`_ and it extends the framework defined Network class. 
+
 .. code-block:: scala
-   case class House extends Network 
+
+  case class House extends Network 
 
 3. However, each house in the Network requires a unique house id which is given as an argument to the ``House`` class. This house id is an ‘attribute’ of the corresponding house. 
+
 .. code-block:: scala
-   case class House(id: Long) extends Network 
+
+  case class House(id: Long) extends Network 
    
-.. note::
-    Long is just a datatype of Scala.
+.. note:: Long is just a datatype of Scala.
   
 4. You can define the relationship of the case-class with the agent by using the framework defined ``addRelation`` function within the class definition. A house houses an agent, so the relation is simply given by the string, “HOUSES”. These relations are defined in the Main class and are user-definable. 
+
 .. code-block:: scala
-        addRelation[Person]("HOUSES")
-.. note::
-    A House “HOUSES” an Agent and an Agent “STAYS_AT” a House so these two relations are inherently reflections of each other. The first relation is specified in the House         class, while the second one is specified in the Person class(put link). The same logic can be extended to any pair of Agents and corresponding Network case classes. These       relations are defined in the ``Main`` class which is explained later. 
+  
+  addRelation[Person]("HOUSES")
+.. note:: A House “HOUSES” an Agent and an Agent “STAYS_AT” a House so these two relations are inherently reflections of each other. The first relation is specified in the House class, while the second one is specified in the Person class(put link). The same logic can be extended to any pair of Agents and corresponding Network case classes. These relations are defined in the ``Main`` class which is explained later. 
 
 
 5. Similarly, an Office is also a possible component of the Network which has a different relation with the agent. Just like the ``House`` class, an ``Office`` class is defined by a unique office id. Since an office employs an agent, the relation here is simply given by “EMPLOYER_OF”.
+
 .. code-block:: scala 
-    addRelation[Person](“EMPLOYER_OF)
+  
+  addRelation[Person](“EMPLOYER_OF)
 
 
 6. Another characteristic of the case classes extended from the network is the ``getContactProbability``. This value is defined in the Network class, and hence is overridden to define the value one needs, as shown below, within the case-class definition. 
+
 .. code-block:: scala
-    override def getContactProbability(): Double = 1.0
+  
+  override def getContactProbability(): Double = 1.0
 
 The importance of this function will become evident after the Disease Dynamics section. 
  
 7. The entire case class should look like this :- 
+
 .. code-block:: scala
-    package com.bharatsim.examples.epidemiology.sir
+  
+  package com.bharatsim.examples.epidemiology.sir
     
-    case class House(id: Long) extends Network {
-     addRelation[Person]("HOUSES")
+  
+  case class House(id: Long) extends Network {
+   
+   addRelation[Person]("HOUSES")
 
 
-     override def getContactProbability(): Double = 1.0
-    }
+   
+   override def getContactProbability(): Double = 1.0
+ 
+ }
 
 
 Setting Up the Agents
@@ -72,49 +88,54 @@ In the context of the framework, agents are the extension of the ``Agent`` class
 
 
 1. Create a case class by the name “Person”. Since it is an extension of the Agent class which is an extension of the Node class, it is important to import these as shown below.
+
 .. code-block:: scala
-import com.bharatsim.engine.models.{Agent, Node}
-.. note::
-    It can be named as you please. For the sake of clarity, it has been named as **Person** here
+
+  import com.bharatsim.engine.models.{Agent, Node}
+
+.. note:: It can be named as you please. For the sake of clarity, it has been named as **Person** here
 
 2. Similar to the ``House`` case class described above, the ``Person`` case class is defined by a set of attributes. These attributes are generally the characteristics of a generic person like a person id, age etc. To define the Person case class, one must also call its attributes, which in this case are the id and age. 
 .. code-block:: scala
-    case class Person(id: Long, age: Int) extends Agent {
-    }
+    
+  case class Person(id: Long, age: Int) extends Agent {
+  }
     
 3. In order to add the relationship between the Person and the components of the Network, write the following code within the case class Person.
 .. code-block:: scala
-    addRelation[House]("STAYS_AT")
-    addRelation[Office]("WORKS_AT")
-    addRelation[School]("STUDIES_AT")
+  
+  addRelation[House]("STAYS_AT")
+  addRelation[Office]("WORKS_AT")
+  addRelation[School]("STUDIES_AT")
 
 4. Given below is an example which will help you to understand the importance of attributes as well as behaviours. Consider the year ‘1984’. During this time, Big Brother doesn’t allow people below the age of 25 to watch ‘Harry Potter’ movies. To model this scenario, you can add a parameter ‘canIWatchHarryPotter’ when defining the ``Person`` case class and let it’s default value be “No”.
 .. code-block:: scala
-    import com.bharatsim.engine.Context
-    
-    case class Person(id:Long, age:Int, canIWatchHarryPotter = ‘No’: String) extends Agent
+  
+  import com.bharatsim.engine.Context
+      
+  case class Person(id:Long, age:Int, canIWatchHarryPotter = ‘No’: String) extends Agent
 
-.. note::
-    String is a data-type which takes strings as the arguments. 
+.. note:: String is a data-type which takes strings as the arguments. 
 
 
 Assume that the name of this behaviour is ``watchMovie``. So, the task of the behaviour is to change the value of the parameter ``canIWatchHarryPotter`` from ‘No’ to ‘Yes’ for people above the age of 25. 
 
-.. note::
-    The behaviour takes ``Context`` as an argument so it has to be imported.
+.. note:: The behaviour takes ``Context`` as an argument so it has to be imported.
 
 
 This can be done using the framework defined ``updateParam`` function which updates the specified parameters. The function takes two arguments, the parameter which is to be updated and the updated value.  
 
 .. code-block:: scala
-    val watchMovie : Context => Unit = (context:Context) => {
-        if (age >= 25) {
-            updateParam("canIWatchHarryPotter", ‘Yes’)}
+  
+  val watchMovie : Context => Unit = (context:Context) => {
+      if (age >= 25) {
+          updateParam("canIWatchHarryPotter", ‘Yes’)}
 
 
 It is important to use ``addBehaviour`` within the same case class. 
 .. code-block:: scala
-    addBehaviour(watchMovie)
+    
+  addBehaviour(watchMovie)
     
 The SIR Model in BharatSim
 --------------------------
