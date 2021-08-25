@@ -96,12 +96,14 @@ In the context of the framework, agents are the extension of the ``Agent`` class
 .. note:: It can be named as you please. For the sake of clarity, it has been named as **Person** here
 
 2. Similar to the ``House`` case class described above, the ``Person`` case class is defined by a set of attributes. These attributes are generally the characteristics of a generic person like a person id, age etc. To define the Person case class, one must also call its attributes, which in this case are the id and age. 
+
 .. code-block:: scala
     
   case class Person(id: Long, age: Int) extends Agent {
   }
     
 3. In order to add the relationship between the Person and the components of the Network, write the following code within the case class Person.
+
 .. code-block:: scala
   
   addRelation[House]("STAYS_AT")
@@ -109,6 +111,7 @@ In the context of the framework, agents are the extension of the ``Agent`` class
   addRelation[School]("STUDIES_AT")
 
 4. Given below is an example which will help you to understand the importance of attributes as well as behaviours. Consider the year ‘1984’. During this time, Big Brother doesn’t allow people below the age of 25 to watch ‘Harry Potter’ movies. To model this scenario, you can add a parameter ‘canIWatchHarryPotter’ when defining the ``Person`` case class and let it’s default value be “No”.
+
 .. code-block:: scala
   
   import com.bharatsim.engine.Context
@@ -133,6 +136,7 @@ This can be done using the framework defined ``updateParam`` function which upda
 
 
 It is important to use ``addBehaviour`` within the same case class. 
+
 .. code-block:: scala
     
   addBehaviour(watchMovie)
