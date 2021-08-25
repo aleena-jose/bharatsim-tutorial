@@ -10,7 +10,7 @@ the SAIR model was introduced [1]. The two new compartments are Asymptomatic (A)
 no symptoms are categorised as Asymptomatic (A). Individuals from both Asymptomatic as well as Symptomatic compartments are moved to the Removed (R) compartment
 upon recovery. The diagram below shows how the individuals move through each compartment in this model.
 
-.. image:: /sair_compartments.png
+.. image:: _static/images/sair_compartments.png
 
 The rate of transmission of the disease from an infected to a susceptible is represented by :math:`{\beta}` . Thus the rate of transfer of an infected individual 
 from the Susceptible compartment to the Symptomatic (I) compartment is :math:`{\beta}{\lambda_S}` and to the Asymptomatic (A) compartment is :math:`{\beta}({\lambda_S-1})`
@@ -38,7 +38,7 @@ Introducing the Asymptomatic (A), Symptomatic (I) branching neither changes the 
 On the other hand, we could add more complexity to the model by introducing different infection rates ie, making the symptomatic individuals more infectious 
 than the asymptomatic. We could also make the recovery rates different for the different infected groups. For a simple SAIR model, the graph maybe as shown below. 
 
-.. image:: /sair.png
+.. image:: _static/images/sair.png
 
 In an SAIR model, during each tick :math:`{\delta t}` , the individuals from the Susceptible compartment are checked for infection and are moved to a transient 
 infected compartment using probability
