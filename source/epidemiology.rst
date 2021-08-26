@@ -107,7 +107,7 @@ infected compartment using probability
 The infected individuals then transit out of this temporary compartment to the ``Asymptomatic (A)`` and ``Symptomatic (I)`` compartments using probabilities  
 :math:`{\gamma}` and :math:`{(1- \gamma)}` respectively.
 
-The asymptomatic and symptomatic individuals are then transferred to the ``Removed`` compartment with a probability 
+The asymptomatic and symptomatic individuals are finally transferred to the ``Removed`` compartment with a probability 
 
 .. math::
 
