@@ -19,15 +19,15 @@ This is a generalisation made on the basic SIR model to include the Exposed stat
 
 .. image:: _static/images/seir_compartments.png
 
-The rate of transmission of the disease from an ``Infected`` to a ``Susceptible`` is represented by :math:`{\beta}`. The incubation rate, :math:`{\lambda_E}`, is the rate of latent individuals becoming infectious. The average time an individual spends in the ``Exposed`` compartment, the incubation period of the disease is thus given by :math:`{1/\lambda_E}`. At last :math:`{\lambda_I}` represents the rate of removal of infected individuals from Infected compartment.
+The rate of transmission of the disease from an ``Infected`` to a ``Susceptible`` is represented by :math:`{\lambda_S}`. The incubation rate, :math:`{\lambda_E}`, is the rate of latent individuals becoming infectious. The average time an individual spends in the ``Exposed`` compartment, the incubation period of the disease is thus given by :math:`{1/\lambda_E}`. At last :math:`{\lambda_I}` represents the rate of removal of infected individuals from Infected compartment.
 
 In a closed population with no births or deaths, the SEIR model can be defined using a set of coupled non-linear differential equations described below:
 
 .. math::
 
     \begin{aligned}
-        \frac{dS}{dt} &= \frac{ -\beta SI }{N} \\ \\
-        \frac{dE}{dt} &= \frac{ \beta SI }{N} - \lambda_E E \\ \\
+        \frac{dS}{dt} &= \frac{ -\lambda_S SI }{N} \\ \\
+        \frac{dE}{dt} &= \frac{ \lambda_S SI }{N} - \lambda_E E \\ \\
         \frac{dI}{dt} &= \lambda_E E - \lambda_I I \\ \\
         \frac{dR}{dt} &= \lambda_I I
     \end{aligned}
@@ -50,7 +50,7 @@ In the algorithm, if the agent is ``Susceptible``, we compute the number of infe
 
 .. math::
 
- P_{SE} = \frac{\beta I \delta t}{N}
+ P_{SE} = \frac{\lambda_S I \delta t}{N}
 
 Individuals from the ``Exposed`` compartment are transferred to the ``Infected`` compartment with the probability,
 
@@ -67,22 +67,21 @@ If the agent is already infected, we transition them to the ``Removed`` compartm
 The SAIR Model
 --------------
 
-In real-world situations one might wish to distinguish between individuals with different types of infections. Hence the SAIR model is introduced. The fraction of infected individuals showing or experiencing no symptoms are categorised as ``Asymptomatic (A)`` and the other fraction with symptoms are categorised as ``Symptomatic (I)``. Individuals from both ``Asymptomatic`` as well as ``Symptomatic`` compartments are moved to the ``Removed (R)`` compartment upon recovery. The diagram below shows how the individuals move through each compartment in this model.
+In real-world situations one might wish to distinguish between individuals with different types of infections. Hence the SAIR model is introduced. The fraction of infected individuals showing or experiencing no symptoms are categorised as **Asymptomatic** and the other fraction with symptoms are categorised as **Symptomatic**. Individuals from both ``Asymptomatic (A)`` as well as ``Symptomatic (I)`` compartments are moved to the ``Removed (R)`` compartment upon recovery. The diagram below shows how the individuals move through each compartment in this model.
 
 .. image:: _static/images/sair_compartments.png
 
-The rate of transmission of the disease from an infected to a susceptible is represented by :math:`{\beta}` . Thus the rate of transfer of an infected individual 
-from the ``Susceptible`` compartment to the ``Symptomatic (I)`` compartment is :math:`{\beta}{\lambda_S}` and to the ``Asymptomatic (A)`` compartment is :math:`{\beta}({\lambda_S-1})`, where :math:`{\lambda_S}` represents the fraction of the infected individuals who are symptomatic. At last, :math:`{\lambda_I}`
-represents the rate of removal of infected individuals from the I and A compartments.
+The rate of transmission of the disease from an infected to a susceptible is represented by :math:`{\lambda_S}` . Thus, the rate of transfer of an infected individual from the ``Susceptible (S)`` compartment to the ``Asymptomatic (A)`` compartment is :math:`{\lambda_S \gamma}` and to the ``Symptomatic (I)`` compartment is :math:`{\lambda_S (1- \gamma)}`, where :math:`{\gamma}` represents the fraction of the infected individuals who are asymptomatic. At last, :math:`{\lambda_I}`
+represents the rate of removal of infected individuals from the ``I`` and ``A`` compartments.
 
 The set of coupled non-linear differential equations that defines the SAIR model in a closed population are:
 
 .. math::
 
  \begin{aligned}
-   \frac{dS}{dt} = \frac{ -\beta \lambda_S SI }{N} + \frac{ -\beta (\lambda_S-1) SA }{N} \\ \\
-   \frac{dI}{dt} = \frac{ \beta \lambda_S SI }{N} - \lambda_I I \\ \\                                    
-   \frac{dA}{dt} = \frac{ \beta (\lambda_S-1) SA }{N} - \lambda_I A \\ \\                            
+   \frac{dS}{dt} = \frac{ -\lambda_S \gamma SA }{N} + \frac{ -\lambda_S (1- \gamma) SI }{N} \\ \\
+   \frac{dA}{dt} = \frac{ \lambda_S \gamma SA }{N} - \lambda_I A \\ \\                                    
+   \frac{dI}{dt} = \frac{ \lambda_S (1- \gamma) SI }{N} - \lambda_I I \\ \\                            
    \frac{dR}{dt} = \lambda_I (A+I)
  \end{aligned} 
 
@@ -103,14 +102,14 @@ infected compartment using probability
 
 .. math::
 
- P_{SIn} =  \frac{ -\beta \lambda_S I \delta t}{N} + \frac{ -\beta (\lambda_S-1) A \delta t}{N}
+ P_{SIn} =  \frac{ -\lambda_S \gamma A \delta t}{N} + \frac{ -\lambda_S (1- \gamma) I \delta t}{N}
 
-The infected individuals then transit out of this temporary compartment to the ``Symptomatic (I)`` and ``Asymptomatic (A)`` compartments using probabilities  
-:math:`{\lambda_S}` and :math:`{(\lambda_S-1)}` respectively.
+The infected individuals then transit out of this temporary compartment to the ``Asymptomatic (A)`` and ``Symptomatic (I)`` compartments using probabilities  
+:math:`{\gamma}` and :math:`{(1- \gamma)}` respectively.
 
 The asymptomatic and symptomatic individuals are then transferred to the ``Removed`` compartment with a probability 
 
 .. math::
 
- P_{R} = \lambda_I \delta t.
+ P_{R} = \lambda_I \delta t
 
