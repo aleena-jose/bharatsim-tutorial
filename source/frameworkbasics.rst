@@ -244,6 +244,8 @@ The output is
 
 .. hint:: In case you want your outputs generated *after* the simulation is completed, you can place the above 4 lines of code inside ``simulation.onCompleteSimulation``.
 
+You can see a more in-depth example of this in :ref:`Saving location-level information from the simulation`.
+
 Output at every time step
 _________________________
 
