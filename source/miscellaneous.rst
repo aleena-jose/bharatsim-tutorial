@@ -70,8 +70,8 @@ To implement this, one must go to the ``sbt shell`` and type ``run "my_sir_model
 One can also run a Main file by creating a `.jar` file, as described above and then running ``java -jar file.jar [ arguments ]``
 
 
-Outputting the age-stratified number of people per place
---------------------------------------------------------
+Saving location-level information from the simulation
+-----------------------------------------------------
 
 .. tip:: Before reading this section, it's recommended that you read the basics in the :ref:`Outputs` section.
 
@@ -116,17 +116,19 @@ The next method is called ``getId``, and it retrieves the location ID of a ``Gra
     }
   }
 
-.. hint:: Looking at this function, you may think it's unnecessary: it looks almost identical to ``decodeNode``! Why not just use ``decodeNode(classType, node).id``? In that case, however, note that ``decodeNode`` returns a ``Node``, which does not have an ``id`` attribute.
+.. caution:: Looking at this function, you may think it's unnecessary: it looks almost identical to ``decodeNode``! Why not just use ``decodeNode(classType, node).id``? In that case, however, note that ``decodeNode`` returns a ``Node``, which does not have an ``id`` attribute.
 
     By playing around with the function, you may find out that the ``GraphNode`` attribute *does* have an ``id``: so why not just write the function to return ``node.id``? The ``GraphNode.id`` attribute is a completely different number from the location ID, which is used to identify the node on the graph. As such, while the code will compile and run, the output under ``LocationID`` will have different results from what you'd expect.
 
-Now, we can start to write down our ``getRows`` method. We want to be able to initialize a large list, every component of which is a list containing a row of the CSV file. While it sounds tempting to first initialize an empty list, and add lists to it one at a time, that is not possible in scala, as the ``List`` datatype is immutable. As such, we use the `ListBuffer <https://alvinalexander.com/scala/how-to-create-mutable-list-in-scala-listbuffer-cookbook/>`_ datatype, which has a lot of useful methods.
+Now, we can start to write down our ``getRows`` method. We want to be able to initialize a large list, every component of which is a list containing a row of the CSV file. While it sounds tempting to first initialize an empty list, and add lists to it one at a time, that is not possible in scala. This is because the ``List`` datatype is immutable - although you can define a list just fine, it cannot be changed after. We can get around this by using the `ListBuffer <https://alvinalexander.com/scala/how-to-create-mutable-list-in-scala-listbuffer-cookbook/>`_ datatype, which has a lot of useful methods.
 
 .. code-block:: scala
 
   override def getRows(): List[List[Any]] = {
 
     val rows = ListBuffer.empty[List[String]]
+
+  }
 
 Next we get all the nodes of the correct ``placeType`` (which, remember, was a string that the function accepts as an argument)
 
@@ -138,7 +140,7 @@ Iterating over each location, which we call ``oneLocation``:
 
 .. code-block:: scala
 
-    locations.foreach(oneLocation => {
+    locations.foreach(oneLocation => {})
 
 We generate a ``decodedLoc`` and ``locId`` using our ``decodeNode`` and ``getId`` functions respectively
 
