@@ -1,7 +1,6 @@
 Epidemiology
 ============
 
-.. _sir-model:
 
 The SIR Model
 --------------
@@ -9,8 +8,40 @@ The SIR Model
 Epidemiological models are often compartmental models, where each individual in the model(or in our case, agents) move from one compartment to another. One of the simple but effective models include the **SIR Model**. The SIR Model consists of three compartments or states, namely, ``Susceptible``, ``Infected`` and ``Removed``. In the model, the movement of each individual from one compartment to another is governed by some rate, which can be expressed as differential equations, explained later in this document. But first, how does the SIR Model work?
 
 In the SIR Model, initially all individuals are Susceptible, while the Infection is induced into a small fraction of the total population. Contacts of the ``Infected`` will transition to the ``Infected``. Similarly individuals progress from the ``Infected`` to the ``Removed`` coompartment with another rate. It is important to note that ``Removed`` does not imply either of *Recovered* or *Dead*, rather a combination of both. The representation of the model looks as follows. 
-.. figure
+
+.. figure:: _static/images/epidemiology-sir-de-1.png
+    :width: 200px
+    :align: center
+    :height: 100px
+    :alt: alternate text
+    :figclass: align-center
+
+    The SIR Model
+
 The SIR model that is explained below is on an isolated population. The other condition imposed on this population is that people who have been ``Removed`` will not be able to get Susceptible. 
+
+    
+What the following terms mean in the Equations:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+:math:`S(t)` means the number of Susceptible people at a given time, :math:`t` 
+:math:`I(t)` means the number of Infected people at a given time, :math:`t` 
+:math:`R(t)` means the number of Removed people at a given time, :math:`t` 
+
+The Equations
+^^^^^^^^^^^^^^^^^^^
+The following are the differential equations governing the SIR Model, as described above:
+.. math::
+    \frac{\mathrm{d}S }{\mathrm{d} t} = -\beta S(t) I(t)                (i)
+    \frac{\mathrm{d}I }{\mathrm{d} t} = \beta S(t) I(t) - \gamma I(t)   (ii)
+    \frac{\mathrm{d}R }{\mathrm{d} t} = \gamma I(t)                     (iii)
+
+Why these Equations?
+^^^^^^^^^^^^^^^^^^^^
+Equation (i) means that the decrease in the number of Susceptible individuals is dependent on the number of Individuals Infected and Susceptible at any given time t. This goes by the simple logic that if more people are already infected in the population, more people would likely become Infected, and if more Susceptible people are there, there is a better chance of an Infected Person meeting someone Susceptible than in a case having lesser Susceptible people. 
+If one adds equations (i),(ii) and (iii) up, they will find that the total adds up to 0. By differntial calculus, we know that of the derivative of any function is zero, then the function is constant. Here that function is the total number of people in a population, which one can denote as :math"`N`, which means that this is a *Closed Population*. 
+
+
+    
 
 The SEIR Model
 --------------
