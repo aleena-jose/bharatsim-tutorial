@@ -244,6 +244,8 @@ The output is
 
 .. hint:: In case you want your outputs generated *after* the simulation is completed, you can place the above 4 lines of code inside ``simulation.onCompleteSimulation``.
 
+You can see a more in-depth example of this in :ref:`Outputting the age-stratified number of people per place`.
+
 Output at every time step
 _________________________
 
