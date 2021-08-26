@@ -91,7 +91,7 @@ where the total population,
 
  N = S + I + A + R
 
-Introducing the ``Asymptomatic (A)``, ``Symptomatic (I)`` branching neither changes the total number of infections nor affects the total duration of the epidemic. 
+Introducing the ``Asymptomatic``, ``Symptomatic`` branching neither changes the total number of infections nor affects the total duration of the epidemic. 
 On the other hand, we could add more complexity to the model by introducing different infection rates ie, making the symptomatic individuals more infectious 
 than the asymptomatic. We could also make the recovery rates different for the different infected groups. For a simple SAIR model, the graph maybe as shown below. 
 
@@ -104,7 +104,7 @@ infected compartment using probability
 
  P_{SIn} =  \frac{ -\lambda_S \gamma A \delta t}{N} + \frac{ -\lambda_S (1- \gamma) I \delta t}{N}
 
-The infected individuals then transit out of this temporary compartment to the ``Asymptomatic (A)`` and ``Symptomatic (I)`` compartments using probabilities  
+The infected individuals then transit out of this temporary compartment to the ``Asymptomatic`` and ``Symptomatic`` compartments using probabilities  
 :math:`{\gamma}` and :math:`{(1- \gamma)}` respectively.
 
 The asymptomatic and symptomatic individuals are finally transferred to the ``Removed`` compartment with a probability 
