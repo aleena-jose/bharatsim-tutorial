@@ -10,13 +10,13 @@ Given the flexibility that it aims to achieve, it should not be surprising that 
 BharatSim is such a framework, helping model developers to build large-scale agent-based models to address the above challenges in an Indian context. BharatSim's vision is to build an India scale agent based framework that would enable modellers from various fields of study -- ranging from epidemiology, and disaster management to economics -- to advise policy makers and other institutions in their decisions. No other framework in India is as generic or scalable in this context.
 
 
-**Key features of BharatSim.** BharatSim has been developed with three goals in mind:
+BharatSim has been developed with three goals in mind:
 
-1. Flexibility: Given that it is a social simulation framework, a researcher can develop models across disciplines such as epidemiology, economics, climate science, and so on,
+1. **Flexibility:** Given that it is a social simulation framework, a researcher can develop models across disciplines such as epidemiology, economics, climate science, and so on,
 
-2. Scalability: It can keep track of to millions of agents in an efficient manner,
+2. **Scalability:** It can keep track of to millions of agents in an efficient manner,
 
-3. Customisation: It has been developed to suit India's needs, via its support for synthetic population.
+3. **Customisation:** It has been developed to suit India's needs, via its support for synthetic population.
 
 
 Synthetic Population

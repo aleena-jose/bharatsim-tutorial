@@ -1,9 +1,7 @@
 Writing your First Program
 ==========================
-Introduction
-~~~~~~~~~~~~~~~~~~~~~~~
-This section is a detailed guide on how to build a `SIR Model <link for SIR URL>`_ in BharatSim from scratch. By the end of this section, you should be able to write and execute a SIR model all by yourself.
 
+This section is a detailed guide on how to build a `SIR Model <link for SIR URL>`_ in BharatSim from scratch. By the end of this section, you should be able to write and execute a SIR model by yourself.
 
 Any model built using this framework contains different classes which are essentially extensions of different `Nodes <#>`_. To properly build a SIR model from scratch, you will first need to define these classes and the properties associated with them. These classes are grouped under different components of the model. Here, the SIR model has two different components:-
 1. `Agent <#>`_
@@ -115,7 +113,7 @@ In the context of the framework, agents are the extension of the ``Agent`` class
 
   import com.bharatsim.engine.Context
 
-  case class Person(id:Long, age:Int, canIWatchHarryPotter = ‘No’: String) extends Agent
+  case class Person(id:Long, age:Int, canIWatchHarryPotter = "No": String) extends Agent{}
 
 .. note:: String is a data-type which takes strings as the arguments.
 
@@ -131,7 +129,8 @@ This can be done using the framework defined ``updateParam`` function which upda
 
   val watchMovie : Context => Unit = (context:Context) => {
       if (age >= 25) {
-          updateParam("canIWatchHarryPotter", ‘Yes’)}
+          updateParam("canIWatchHarryPotter", "Yes")
+        }
 
 
 It is important to use ``addBehaviour`` within the same case class.
