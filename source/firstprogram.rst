@@ -9,8 +9,8 @@ Any model built using this framework contains different classes which are essent
 
 These components are related to each other via simple relations which are described in detail later.
 
-Setting up the components of the Network:
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Setting up the components of the Network
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Network class gives a sense of geography to the model. The different components of the Network are simple locations like houses, offices, schools etc. The agents move about between these locations as shown in the figure below.
 
@@ -186,7 +186,7 @@ Now we simply have to register it in the simulation. Note that the following cod
 
 
 Computing the number of people in a location
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In our example of the SIR model, we decided if a person would be infected or not by:
 
@@ -232,7 +232,7 @@ The problem arises with different methods of scheduling. Someone who's infected 
 There are two currently proposed methods to deal with the problem:
 
 Using an attribute of the ``Person`` class
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 We can solve the problem by adding an attribute called ``currentLocation`` to the ``Person`` class.
 
@@ -315,7 +315,7 @@ Putting it all together, our function is
   }
 
 Checking the locations without a ``currentLocation`` attribute
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``updateParam`` updates a node on the graph, and is called once per person per tick. That can potentially slow the program down, and another possibility is to avoid using it entirely. We'll still do the same thing - get the schedule for the agent, check if they're actually at the place you're looking at, and then get the total and infected counts.
 
