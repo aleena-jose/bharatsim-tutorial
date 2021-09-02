@@ -142,6 +142,11 @@ The SIRS Model
 
 In the SIR model, the individuals attain life long immunity after getting recovered from the infection, but this is not the case for many diseases. The immunity can decline over time and as a result the recovered individuals can get **reinfected**. The SIRS (``Susceptible`` – ``Infected`` – ``Recovered`` – ``Susceptible``) model allows the transfer of recovered` individuals back to the ``Susceptible`` compartment from where they can get infected again.  The diagram below shows the movement of the individuals through each compartment in an SIRS model.
 
+.. figure:: _static/images/epidemiology_SIRS_disease_progression.png
+    :align: center
+    :alt: The disease progression in the SIRS Model
+    :figclass: align-center
+
 The infectious rate, $\lambda_S$, controls the rate of spread which represents the probability of transmitting disease between a susceptible and an infectious individual. $\lambda_I$ is the recovery rate which can be determined from the average duration of infection.
 $\lambda_R$ is the rate at which the recovered individuals return to the susceptible statue due to loss of immunity.
 
@@ -168,7 +173,7 @@ On choosing the right parameters, an endemic equilibrium is reached, meaning tha
     :alt: Sample run for the SIRS Model
     :figclass: align-center
     
-In the algorithm, during each time step $\Delta t$ the transfer of individuals from Susceptible to the Infected and from Infected to the Recovered compartments is done using the same probability as in an SIR model.
+In the algorithm, during each time step $\Delta t$, the individuals are transferred from Susceptible to the Infected and from Infected to the Recovered compartments with the same probability as in an SIR model.
 
 .. math::
 
@@ -176,7 +181,7 @@ In the algorithm, during each time step $\Delta t$ the transfer of individuals f
    \ P_\text{SI} = \lambda_S \frac{I}{N} \Delta t\\
    \ P_\text{IR} = \lambda_I \Delta t
  
-The recovered individuals upon loss of immunity are transferred back to the Susceptible compartment using probability,
+The recovered individuals upon loss of immunity are transferred back to the Susceptible compartment with probability,
 
 .. math::
 
