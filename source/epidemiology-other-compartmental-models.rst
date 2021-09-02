@@ -73,9 +73,9 @@ However, we now have a *branching* that could occur. Once infected, a susceptibl
 .. math::
 
  \begin{aligned}
-   \dv{S}{t} &=  -\lambda_S \left(\frac{A + I}{N}\right) \\[10pt]
-   \dv{A}{t} &=  \lambda_S \gamma \left(\frac{A + I}{N}\right) - \lambda_A A \\[10pt]
-   \dv{I}{t} &=  \lambda_S (1-\gamma) \left(\frac{A + I}{N}\right) - \lambda_I I \\[10pt]
+   \dv{S}{t} &=  -\frac{\lambda_S}{N} S\left(A + I\right) \\[10pt]
+   \dv{A}{t} &=  \gamma \frac{\lambda_S}{N} S \left(A + I\right) - \lambda_A A \\[10pt]
+   \dv{I}{t} &=  (1-\gamma) \frac{\lambda_S}{N}  \left(A+I\right) - \lambda_I I \\[10pt]
    \dv{R}{t} &= \lambda_A A+ \lambda_I I
  \end{aligned}
 
@@ -110,7 +110,7 @@ Modelling the transitions in the SAIR model is a little bit more involved than i
 
 Thus, at each tick $\Delta t$, susceptible individuals are checked for infection and are moved out of the susceptible compartment with a probability
 
-$$P_\text{Out of S} = -\lambda_S \left(\frac{A + I}{N}\right)\Delta t.$$
+$$P_\text{Out of S} = \lambda_S \left(\frac{A + I}{N}\right)\Delta t.$$
 
 Now, once they are set to transition, they are either sent to $A$ with a probability $\gamma$, or otherwise they are sent to $I$. The asymptomatic and symptomatic individuals are finally transferred to the ``Removed`` compartment with a probabilities $\lambda_A\Delta t$ and $\lambda_I\Delta t$ respectively.
 
@@ -119,9 +119,9 @@ We can now add one last level of complexity to this problem: what if we wanted t
 .. math::
 
  \begin{aligned}
-   \dv{S}{t} &=  -\lambda_S \left(\frac{C_A A + C_I I}{N}\right) \\[10pt]
-   \dv{A}{t} &=  \lambda_S \gamma \left(\frac{C_A A + C_I I}{N}\right) - \lambda_A A \\[10pt]
-   \dv{I}{t} &=  \lambda_S (1-\gamma) \left(\frac{C_A A + C_I I}{N}\right) - \lambda_I I \\[10pt]
+   \dv{S}{t} &=  -\frac{\lambda_S}{N} S \left(C_A A + C_I I\right) \\[10pt]
+   \dv{A}{t} &=  \gamma \frac{\lambda_S}{N} S\left(C_A A + C_I I\right) - \lambda_A A \\[10pt]
+   \dv{I}{t} &=  (1-\gamma) \frac{\lambda_S}{N} S \left(C_A A + C_I I\right) - \lambda_I I \\[10pt]
    \dv{R}{t} &= \lambda_A A+ \lambda_I I
  \end{aligned}
 
@@ -129,11 +129,10 @@ Thus, if $C_I = 1$ and $C_A = 0.5$, then a single asymptomatic individual is onl
 
 .. note ::
 
-  Notice how the quantity that really matters is not $C_A$ or $C_I$, but rather $\lambda_S\, C_A$ and $\lambda_S\, C_I$. If you were to choose $C_I = 2$ and $C_A = 1$, in this case as well asymptomatics will be half as likely like to infect susceptibles, but we have effectively *increased* the overall value of $\lambda_S$ because of the factor 2.
+  Notice how the quantities that really matter re not $C_A$ or $C_I$, but rather $\lambda_S\, C_A$ and $\lambda_S\, C_I$. If you were to choose $C_I = 2$ and $C_A = 1$, in this case as well asymptomatics will be half as likely like to infect susceptibles, but we have effectively *increased* the overall value of $\lambda_S$ because of the factor 2.
 
 
 .. admonition:: Exercise
   :class: error
 
   In this case, would setting $\lambda_A = \lambda_I$ reduce this to a simple SIR model, as before? Why not?
-
